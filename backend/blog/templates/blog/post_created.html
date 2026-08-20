@@ -1,0 +1,13 @@
+{% extends "blog/base.html" %}
+{% block title %}Post created | Field Notes{% endblock %}
+{% block content %}
+<main class="page">
+    <section class="confirmation">
+        <p class="eyebrow">Saved successfully</p>
+        <h1>Post created</h1>
+        <p><strong>{{ post.title }}</strong> is now saved.</p>
+        <a class="button" href="{% url 'post_create' %}">Create another post</a>
+        <a class="muted" href="{% url 'post_list' %}">View stories</a>
+    </section>
+</main>
+{% endblock %}

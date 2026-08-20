@@ -1,0 +1,93 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Field Notes{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #17211b;
+            --muted: #66736a;
+            --paper: #f4f1e9;
+            --surface: #fffdf8;
+            --line: #d9ded5;
+            --accent: #d85d3e;
+            --accent-dark: #ad3e28;
+            --sage: #dce8d8;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; color: var(--ink); background: var(--paper); font-family: "DM Sans", sans-serif; }
+        a { color: inherit; }
+        .site-header { border-bottom: 1px solid var(--line); background: rgba(255, 253, 248, .9); }
+        .nav { width: min(1120px, calc(100% - 40px)); margin: auto; min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+        .brand { color: var(--ink); font-family: "Space Grotesk", sans-serif; font-size: 1.35rem; font-weight: 700; text-decoration: none; letter-spacing: .02em; }
+        .brand span { color: var(--accent); }
+        .nav-links { display: flex; align-items: center; gap: 20px; font-size: .92rem; }
+        .nav-links a { text-decoration: none; color: var(--muted); }
+        .nav-links a:hover { color: var(--accent-dark); }
+        .button { display: inline-block; border: 0; border-radius: 5px; background: var(--accent); color: white; padding: 11px 16px; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+        .button:hover { background: var(--accent-dark); }
+        .page { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 58px 0 80px; }
+        h1, h2 { font-family: "Space Grotesk", sans-serif; }
+        h1 { font-size: clamp(2.1rem, 5vw, 4.3rem); line-height: 1.02; margin: 0; }
+        h2 { margin: 0; line-height: 1.15; }
+        .eyebrow { color: var(--accent-dark); font-size: .76rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+        .muted { color: var(--muted); }
+        .hero { display: grid; grid-template-columns: 1fr minmax(280px, 390px); align-items: end; gap: 40px; margin-bottom: 42px; }
+        .hero-copy { max-width: 650px; }
+        .hero-copy p { color: var(--muted); font-size: 1.08rem; line-height: 1.6; margin: 18px 0 0; }
+        .search { display: flex; gap: 8px; }
+        .search input { min-width: 0; flex: 1; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); padding: 12px 14px; color: var(--ink); font: inherit; }
+        .post-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .post-card { display: flex; min-height: 280px; flex-direction: column; justify-content: space-between; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); padding: 24px; transition: transform .2s ease, box-shadow .2s ease; }
+        .post-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(23, 33, 27, .08); }
+        .post-card h2 { font-size: 1.35rem; margin: 10px 0 12px; }
+        .post-card h2 a { text-decoration: none; }
+        .post-card h2 a:hover { color: var(--accent-dark); }
+        .card-excerpt { color: var(--muted); line-height: 1.55; }
+        .meta { display: flex; flex-wrap: wrap; gap: 9px 14px; color: var(--muted); font-size: .82rem; }
+        .category { display: inline-block; border-radius: 999px; background: var(--sage); color: #405641; padding: 5px 9px; font-size: .72rem; font-weight: 700; }
+        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 36px; }
+        .pagination a, .pagination span { border: 1px solid var(--line); border-radius: 4px; background: var(--surface); padding: 9px 13px; text-decoration: none; }
+        .pagination .current { border-color: var(--ink); background: var(--ink); color: white; }
+        .article { max-width: 760px; margin: auto; }
+        .article h1 { margin: 12px 0 18px; }
+        .article-body { font-size: 1.1rem; line-height: 1.8; margin-top: 38px; }
+        .article-actions { display: flex; gap: 14px; margin-top: 34px; }
+        .empty { border: 1px dashed var(--line); padding: 34px; text-align: center; color: var(--muted); }
+        .form-page { max-width: 760px; margin: auto; }
+        .form-page h1 { margin: 12px 0 30px; }
+        .post-form { border: 1px solid var(--line); border-radius: 7px; background: var(--surface); padding: clamp(22px, 5vw, 42px); }
+        .field { margin-bottom: 20px; }
+        .field label { display: block; margin-bottom: 7px; font-size: .88rem; font-weight: 700; }
+        .field input:not([type="checkbox"]), .field textarea, .field select { width: 100%; border: 1px solid var(--line); border-radius: 4px; background: #fff; padding: 12px; color: var(--ink); font: inherit; }
+        .field textarea { resize: vertical; min-height: 170px; }
+        .field input:focus, .field textarea:focus, .field select:focus { outline: 2px solid rgba(216, 93, 62, .3); border-color: var(--accent); }
+        .checkbox-field { display: flex; align-items: center; gap: 9px; }
+        .checkbox-field label { margin: 0; }
+        .errors { margin: 7px 0 0; padding: 0; color: var(--accent-dark); font-size: .85rem; list-style: none; }
+        .form-actions { display: flex; align-items: center; gap: 18px; margin-top: 28px; }
+        .confirmation { max-width: 650px; margin: 60px auto; border-left: 4px solid var(--accent); padding: 12px 0 12px 28px; }
+        .confirmation h1 { margin-bottom: 14px; }
+        .danger { color: var(--accent-dark); }
+        @media (max-width: 780px) { .hero { grid-template-columns: 1fr; gap: 24px; } .post-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 520px) { .nav { width: min(100% - 28px, 1120px); } .page { width: min(100% - 28px, 1120px); padding-top: 38px; } .nav-links { gap: 10px; } .nav-links a:not(.button) { display: none; } .post-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a class="brand" href="{% url 'home' %}">Field<span>Notes</span></a>
+            <div class="nav-links">
+                <a href="{% url 'post_list' %}">Stories</a>
+                <a class="button" href="{% url 'post_create' %}">Write a post</a>
+            </div>
+        </nav>
+    </header>
+    {% block content %}{% endblock %}
+</body>
+</html>

@@ -3,6 +3,7 @@ import json
 from django.test import TestCase
 
 from .models import Author, Post
+from .forms import PostForm
 
 # Create your tests here.
 class PostCreateTests(TestCase):
@@ -11,7 +12,7 @@ class PostCreateTests(TestCase):
 
 	def test_creates_post(self):
 		response = self.client.post(
-			"/blogs/create/",
+			"/blogs/api/create/",
 			data=json.dumps(
 				{
 					"title": "A new post",
@@ -28,6 +29,38 @@ class PostCreateTests(TestCase):
 		self.assertEqual(response.json()["title"], "A new post")
 		self.assertFalse(response.json()["is_published"])
 
+	def test_form_page_is_displayed(self):
+		response = self.client.get("/blogs/create/")
+
+		self.assertEqual(response.status_code, 200)
+		self.assertIsInstance(response.context["form"], PostForm)
+
+	def test_form_creates_post(self):
+		response = self.client.post(
+			"/blogs/create/",
+			data={
+				"title": "A form post",
+				"content": "Created with ModelForm",
+				"author": self.author.id,
+				"category": "Django",
+				"is_published": "on",
+			},
+		)
+
+		self.assertEqual(response.status_code, 201)
+		self.assertEqual(Post.objects.get().title, "A form post")
+		self.assertContains(response, "A form post", status_code=201)
+
+	def test_form_rejects_missing_required_fields(self):
+		response = self.client.post(
+			"/blogs/create/",
+			data={"author": self.author.id},
+		)
+
+		self.assertEqual(response.status_code, 200)
+		self.assertFalse(Post.objects.exists())
+		self.assertIn("This field is required.", response.content.decode())
+
 
 class PostDetailMutationTests(TestCase):
 	def setUp(self):
@@ -37,6 +70,7 @@ class PostDetailMutationTests(TestCase):
 			title="Original title",
 			content="Original content",
 			author=self.author,
+			is_published=True,
 		)
 		self.url = f"/blogs/{self.post.id}/"
 
@@ -89,7 +123,7 @@ class PostDetailMutationTests(TestCase):
 
 	def test_rejects_invalid_json(self):
 		response = self.client.post(
-			"/blogs/create/",
+			"/blogs/api/create/",
 			data="not json",
 			content_type="application/json",
 		)
@@ -98,7 +132,7 @@ class PostDetailMutationTests(TestCase):
 
 	def test_rejects_unknown_author(self):
 		response = self.client.post(
-			"/blogs/create/",
+			"/blogs/api/create/",
 			data=json.dumps(
 				{"title": "A new post", "content": "Post content", "author_id": 999}
 			),
@@ -110,7 +144,7 @@ class PostDetailMutationTests(TestCase):
 	def test_can_create_without_csrf_token(self):
 		client = self.client_class(enforce_csrf_checks=True)
 		response = client.post(
-			"/blogs/create/",
+			"/blogs/api/create/",
 			data=json.dumps(
 				{
 					"title": "A Postman post",
@@ -122,3 +156,81 @@ class PostDetailMutationTests(TestCase):
 		)
 
 		self.assertEqual(response.status_code, 201)
+
+
+class BlogPageTests(TestCase):
+	def setUp(self):
+		self.author = Author.objects.create(name="Aadi", email="aadi@example.com")
+		self.post = Post.objects.create(
+			title="Published post",
+			content="Published content",
+			author=self.author,
+			is_published=True,
+		)
+
+	def test_home_page(self):
+		response = self.client.get("/")
+
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, "Read published posts")
+
+	def test_list_and_detail_pages(self):
+		list_response = self.client.get("/blogs/")
+		detail_response = self.client.get(f"/blogs/{self.post.id}/")
+
+		self.assertContains(list_response, "Published post")
+		self.assertContains(detail_response, "Published content")
+
+	def test_detail_page_increments_views(self):
+		self.client.get(f"/blogs/{self.post.id}/")
+		self.post.refresh_from_db()
+
+		self.assertEqual(self.post.views, 1)
+
+	def test_list_search_filters_posts(self):
+		Post.objects.create(
+			title="Different topic",
+			content="Something unrelated",
+			author=self.author,
+			is_published=True,
+		)
+
+		response = self.client.get("/blogs/?q=Published")
+
+		self.assertContains(response, "Published post")
+		self.assertNotContains(response, "Different topic")
+
+	def test_list_is_paginated(self):
+		for index in range(6):
+			Post.objects.create(
+				title=f"Extra post {index}",
+				content="More content",
+				author=self.author,
+				is_published=True,
+			)
+
+		response = self.client.get("/blogs/")
+
+		self.assertEqual(response.context["page_obj"].paginator.num_pages, 2)
+		self.assertContains(response, "Page 1 of 2")
+
+	def test_edit_action_updates_post(self):
+		response = self.client.post(
+			f"/blogs/{self.post.id}/edit/",
+			data={
+				"title": "Edited post",
+				"content": "Edited content",
+				"author": self.author.id,
+				"is_published": "on",
+			},
+		)
+
+		self.assertEqual(response.status_code, 302)
+		self.post.refresh_from_db()
+		self.assertEqual(self.post.title, "Edited post")
+
+	def test_delete_action_removes_post(self):
+		response = self.client.post(f"/blogs/{self.post.id}/delete/")
+
+		self.assertEqual(response.status_code, 302)
+		self.assertFalse(Post.objects.filter(id=self.post.id).exists())

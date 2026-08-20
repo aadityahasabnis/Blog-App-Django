@@ -1,6 +1,5 @@
 from .models import Author, Post
 from django.contrib import admin
-import site
 
 # Register your models here.
 @admin.register(Author)

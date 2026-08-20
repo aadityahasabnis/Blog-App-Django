@@ -1,86 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, JsonResponse
+from django.core.paginator import Paginator
+from django.db.models import F, Q
 from django.views.decorators.csrf import csrf_exempt
 import json
+from .forms import PostForm
 from .models import Author, Post
 
-# Create your views here.
-def post_list(request):
-    posts = Post.objects.filter(is_published=True).exclude(views=0).order_by('-views').select_related('author').all()
-    return JsonResponse({
-        'posts': [
-            {
-                'id': str(post.id),
-                'title': post.title,
-                'content': post.content,
-                'author': {
-                        "id": post.author.id,
-                        "name": post.author.name,
-                        "email": post.author.email,
-                    },
-                'category': post.category,
-                'is_published': post.is_published,
-                "views": post.views,
-                "created_at": post.created_at,
-            }
-            for post in posts
-        ]
-    })
 
-
-@csrf_exempt
-def post_create(request):
-    if request.method != "POST":
-        return JsonResponse({"error": "Only POST requests are allowed"}, status=405)
-
-    try:
-        data = json.loads(request.body)
-    except (json.JSONDecodeError, UnicodeDecodeError):
-        return JsonResponse({"error": "Request body must contain valid JSON"}, status=400)
-
-    if not isinstance(data, dict):
-        return JsonResponse({"error": "Request body must be a JSON object"}, status=400)
-
-    missing_fields = [field for field in ("title", "content", "author_id") if not data.get(field)]
-    if missing_fields:
-        return JsonResponse(
-            {"error": "Missing required fields", "fields": missing_fields},
-            status=400,
-        )
-
-    try:
-        author = Author.objects.get(id=data["author_id"])
-    except (Author.DoesNotExist, ValueError, TypeError):
-        return JsonResponse({"error": "Author not found"}, status=404)
-
-    post = Post.objects.create(
-        title=data["title"],
-        content=data["content"],
-        author=author,
-        category=data.get("category"),
-        is_published=data.get("is_published", False),
-    )
-
-    return JsonResponse(
-        {
-            "id": str(post.id),
-            "title": post.title,
-            "content": post.content,
-            "author": {
-                "id": post.author.id,
-                "name": post.author.name,
-                "email": post.author.email,
-            },
-            "category": post.category,
-            "is_published": post.is_published,
-            "views": post.views,
-            "created_at": post.created_at,
-        },
-        status=201,
-    )
-
-
-def post_data(post):
+def allPostData(post):
     return {
         "id": str(post.id),
         "title": post.title,
@@ -96,6 +24,83 @@ def post_data(post):
         "created_at": post.created_at,
     }
 
+def json_object(request):
+    try:
+        data = json.loads(request.body)
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return None, JsonResponse({"error": "Request body must contain valid JSON"}, status=400)
+    if not isinstance(data, dict):
+        return None, JsonResponse({"error": "Request body must be a JSON object"}, status=400)
+    return data, None
+
+
+def isAndGetAuthor(author_id):
+    try:
+        return Author.objects.get(id=author_id), None
+    except (Author.DoesNotExist, ValueError, TypeError):
+        return None, JsonResponse({"error": "Author not found"}, status=404)
+
+def post_list(request):
+    search_query = request.GET.get("q", "").strip()
+    posts = Post.objects.filter(is_published=True).select_related("author")
+    if search_query:
+        posts = posts.filter(
+            Q(title__icontains=search_query)
+            | Q(content__icontains=search_query)
+            | Q(category__icontains=search_query)
+            | Q(author__name__icontains=search_query)
+        )
+
+    posts = posts.order_by("-created_at").order_by("-views")
+    page_obj = Paginator(posts, 6).get_page(request.GET.get("page"))
+    return render(
+        request,
+        "blog/post_list.html",
+        {"page_obj": page_obj, "search_query": search_query},
+    )
+
+def post_create(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save()
+            return render(request, "blog/post_created.html", {"post": post}, status=201)
+    else:
+        form = PostForm()
+
+    return render(request, "blog/post_form.html", {"form": form})
+
+
+@csrf_exempt
+def post_create_api(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Only POST requests are allowed"}, status=405)
+
+    data, error = json_object(request)
+    if error:
+        return error
+
+    missing_fields = [field for field in ("title", "content", "author_id") if not data.get(field)]
+    if missing_fields:
+        return JsonResponse(
+            {"error": "Missing required fields", "fields": missing_fields},
+            status=400,
+        )
+
+    author, error = isAndGetAuthor(data["author_id"])
+    if error:
+        return error
+
+    post = Post.objects.create(
+        title=data["title"],
+        content=data["content"],
+        author=author,
+        category=data.get("category"),
+        is_published=data.get("is_published", False),
+    )
+
+    return JsonResponse(allPostData(post), status=201)
+
 
 @csrf_exempt
 def post_detail(request, id):
@@ -107,7 +112,11 @@ def post_detail(request, id):
     if request.method == "GET":
         if not post.is_published:
             return JsonResponse({'error': 'Post not found'}, status=404)
-        return JsonResponse(post_data(post))
+        Post.objects.filter(id=post.id).update(views=F("views") + 1)
+        post.refresh_from_db()
+        if request.headers.get("Accept") == "application/json":
+            return JsonResponse(allPostData(post))
+        return render(request, "blog/post_detail.html", {"post": post})
 
     if request.method == "DELETE":
         post.delete()
@@ -119,13 +128,9 @@ def post_detail(request, id):
             status=405,
         )
 
-    try:
-        data = json.loads(request.body)
-    except (json.JSONDecodeError, UnicodeDecodeError):
-        return JsonResponse({"error": "Request body must contain valid JSON"}, status=400)
-
-    if not isinstance(data, dict):
-        return JsonResponse({"error": "Request body must be a JSON object"}, status=400)
+    data, error = json_object(request)
+    if error:
+        return error
 
     editable_fields = {"title", "content", "author_id", "category", "is_published"}
     unknown_fields = sorted(set(data) - editable_fields)
@@ -144,10 +149,9 @@ def post_detail(request, id):
             )
 
     if "author_id" in data:
-        try:
-            author = Author.objects.get(id=data["author_id"])
-        except (Author.DoesNotExist, ValueError, TypeError):
-            return JsonResponse({"error": "Author not found"}, status=404)
+        author, error = isAndGetAuthor(data["author_id"])
+        if error:
+            return error
     else:
         author = post.author
 
@@ -170,37 +174,32 @@ def post_detail(request, id):
         post.refresh_from_db()
         post.author = Author.objects.get(id=post.author_id)
 
-    return JsonResponse(post_data(post), status=200)
+    return JsonResponse(allPostData(post), status=200)
+
+
+def post_edit(request, id):
+    post = get_object_or_404(Post.objects.select_related("author"), id=id)
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect("post_view", id=post.id)
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, "blog/post_form.html", {"form": form, "post": post})
+
+
+def post_delete(request, id):
+    post = get_object_or_404(Post, id=id)
+    if request.method == "POST":
+        post.delete()
+        return redirect("post_list")
+    return render(request, "blog/post_confirm_delete.html", {"post": post})
 
 
 def home(request):
-    data = {
-        "method": request.method,
-        "path": request.path,
-        "full_path": request.get_full_path(),
-        "query": dict(request.GET),
-        "search": request.GET.getlist("search"),
-        "scheme": request.scheme,
-        "content_type": request.content_type,
-        "headers": dict(request.headers),
-        "meta_keys": list(request.META.keys()),
-        "REQUEST_METHOD": request.META["REQUEST_METHOD"],
-        "REMOTE_ADDR": request.META["REMOTE_ADDR"],
-        "SERVER_NAME": request.META["SERVER_NAME"],
-        "SERVER_PORT": request.META["SERVER_PORT"],
-        "QUERY_STRING": request.META["QUERY_STRING"],
-        "HTTP_USER_AGENT": request.META.get("HTTP_USER_AGENT"),
-        "HTTP_ACCEPT": request.META.get("HTTP_ACCEPT"),
-    }
-
-    meta = {
-        key: str(value)
-        for key, value in request.META.items()
-    }
-    # return JsonResponse({
-    #     "meta": meta
-    # })
-    return JsonResponse(data)
+    return render(request, "blog/home.html")
 
 def inspect_request(request):
     # request.session["favorite_color"] = "blue"

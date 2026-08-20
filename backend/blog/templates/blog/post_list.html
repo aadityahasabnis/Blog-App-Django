@@ -1,0 +1,77 @@
+{% extends "blog/base.html" %}
+{% block title %}Stories | Field Notes{% endblock %}
+{% block content %}
+<main class="page">
+    <section class="hero">
+        <div class="hero-copy">
+            <div class="eyebrow">The latest from our writers</div>
+            <h1>Ideas worth<br>spending time with.</h1>
+            <p>Thoughtful notes on craft, technology, and the small details that make work better.</p>
+        </div>
+        <form class="search" method="get" id="search-form">
+            <input id="search-input" type="search" name="q" value="{{ search_query }}" placeholder="Search stories, authors, categories" aria-label="Search stories" autocomplete="off">
+            <button class="button" type="submit">Search</button>
+        </form>
+    </section>
+
+    <div id="search-results" aria-live="polite">
+        {% if search_query %}<p class="muted">Results for “{{ search_query }}”</p>{% endif %}
+        <section class="post-grid">
+            {% for post in page_obj %}
+                <article class="post-card">
+                    <div>
+                        {% if post.category %}<span class="category">{{ post.category }}</span>{% endif %}
+                        <h2><a href="{% url 'post_view' post.id %}">{{ post.title }}</a></h2>
+                        <p class="card-excerpt">{{ post.content|truncatewords:30 }}</p>
+                    </div>
+                    <div class="meta">
+                        <span>{{ post.author.name }}</span>
+                        <span>{{ post.created_at|date:"M j, Y" }}</span>
+                        <span>{{ post.views }} views</span>
+                    </div>
+                </article>
+            {% empty %}
+                <p class="empty">No published stories match that search.</p>
+            {% endfor %}
+        </section>
+
+        {% if page_obj.has_other_pages %}
+            <nav class="pagination" aria-label="Pagination">
+                {% if page_obj.has_previous %}<a href="?q={{ search_query|urlencode }}&page={{ page_obj.previous_page_number }}">Previous</a>{% endif %}
+                <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}<a href="?q={{ search_query|urlencode }}&page={{ page_obj.next_page_number }}">Next</a>{% endif %}
+            </nav>
+        {% endif %}
+    </div>
+</main>
+<script>
+    const searchForm = document.querySelector("#search-form");
+    const searchInput = document.querySelector("#search-input");
+    let searchResults = document.querySelector("#search-results");
+    let searchTimer;
+    let searchRequest;
+
+    searchInput.addEventListener("input", () => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(async () => {
+            searchRequest?.abort();
+            searchRequest = new AbortController();
+            const params = new URLSearchParams({ q: searchInput.value });
+            const url = `${window.location.pathname}?${params}`;
+
+            try {
+                const response = await fetch(url, { signal: searchRequest.signal });
+                if (!response.ok) throw new Error("Search request failed");
+                const html = await response.text();
+                const documentFragment = new DOMParser().parseFromString(html, "text/html");
+                const nextResults = documentFragment.querySelector("#search-results");
+                searchResults.replaceWith(nextResults);
+                searchResults = nextResults;
+                window.history.replaceState({}, "", url);
+            } catch (error) {
+                if (error.name !== "AbortError") searchForm.submit();
+            }
+        }, 400);
+    });
+</script>
+{% endblock %}

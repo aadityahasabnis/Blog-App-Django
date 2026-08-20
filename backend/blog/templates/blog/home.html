@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% block title %}Field Notes{% endblock %}
+{% block content %}
+<main class="page">
+    <section class="hero">
+        <div class="hero-copy">
+            <div class="eyebrow">A quiet place for good ideas</div>
+            <h1>Field<br>Notes.</h1>
+            <p>Stories, observations, and practical thinking from people who care about the work.</p>
+        </div>
+        <div>
+            <p class="muted">Browse the latest published writing, or add your own perspective to the collection.</p>
+            <p><a class="button" href="{% url 'post_list' %}">Read published posts</a></p>
+        </div>
+    </section>
+</main>
+{% endblock %}

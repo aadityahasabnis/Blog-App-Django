@@ -1,0 +1,16 @@
+{% extends "blog/base.html" %}
+{% block title %}Delete {{ post.title }} | Field Notes{% endblock %}
+{% block content %}
+<main class="page">
+    <section class="confirmation">
+        <p class="eyebrow danger">This cannot be undone</p>
+        <h1>Delete this post?</h1>
+        <p class="muted">You are about to permanently delete “{{ post.title }}”.</p>
+        <form class="form-actions" method="post">
+            {% csrf_token %}
+            <button class="button" type="submit">Delete permanently</button>
+            <a class="muted" href="{% url 'post_view' post.id %}">Cancel</a>
+        </form>
+    </section>
+</main>
+{% endblock %}
