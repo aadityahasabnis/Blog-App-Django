@@ -110,6 +110,15 @@
         "documentation": {}
     },
     {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
         "label": "TestCase",
         "importPath": "django.test",
         "description": "django.test",
@@ -166,12 +175,11 @@
         "documentation": {}
     },
     {
-        "label": "json",
-        "kind": 6,
+        "label": "csrf_exempt",
+        "importPath": "django.views.decorators.csrf",
+        "description": "django.views.decorators.csrf",
         "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
+        "detail": "django.views.decorators.csrf",
         "documentation": {}
     },
     {
@@ -313,6 +321,24 @@
         "documentation": {}
     },
     {
+        "label": "AuthorAdmin",
+        "kind": 6,
+        "importPath": "backend.blog.admin",
+        "description": "backend.blog.admin",
+        "peekOfCode": "class AuthorAdmin(admin.ModelAdmin):\n    list_display = (\n        \"id\",\n        \"name\",\n        \"email\",\n    )\n@admin.register(Post)\nclass PostAdmin(admin.ModelAdmin):\n    list_display = (\n        \"id\",",
+        "detail": "backend.blog.admin",
+        "documentation": {}
+    },
+    {
+        "label": "PostAdmin",
+        "kind": 6,
+        "importPath": "backend.blog.admin",
+        "description": "backend.blog.admin",
+        "peekOfCode": "class PostAdmin(admin.ModelAdmin):\n    list_display = (\n        \"id\",\n        \"title\",\n        \"author\",\n        \"category\",\n        \"is_published\",\n        \"views\",\n        \"created_at\",\n    )",
+        "detail": "backend.blog.admin",
+        "documentation": {}
+    },
+    {
         "label": "BlogConfig",
         "kind": 6,
         "importPath": "backend.blog.apps",
@@ -340,12 +366,192 @@
         "documentation": {}
     },
     {
+        "label": "PostCreateTests",
+        "kind": 6,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "class PostCreateTests(TestCase):\n\tdef setUp(self):\n\t\tself.author = Author.objects.create(name=\"Aadi\", email=\"aadi@example.com\")\n\tdef test_creates_post(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A new post\",\n\t\t\t\t\t\"content\": \"Post content\",",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "PostDetailMutationTests",
+        "kind": 6,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "class PostDetailMutationTests(TestCase):\n\tdef setUp(self):\n\t\tself.author = Author.objects.create(name=\"Aadi\", email=\"aadi@example.com\")\n\t\tself.other_author = Author.objects.create(name=\"Sam\", email=\"sam@example.com\")\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.author,\n\t\t)\n\t\tself.url = f\"/blogs/{self.post.id}/\"",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tself.author",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tself.author = Author.objects.create(name=\"Aadi\", email=\"aadi@example.com\")\n\tdef test_creates_post(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A new post\",\n\t\t\t\t\t\"content\": \"Post content\",\n\t\t\t\t\t\"author_id\": self.author.id,\n\t\t\t\t\t\"category\": \"Django\",",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tresponse",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A new post\",\n\t\t\t\t\t\"content\": \"Post content\",\n\t\t\t\t\t\"author_id\": self.author.id,\n\t\t\t\t\t\"category\": \"Django\",\n\t\t\t\t}\n\t\t\t),",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tself.author",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tself.author = Author.objects.create(name=\"Aadi\", email=\"aadi@example.com\")\n\t\tself.other_author = Author.objects.create(name=\"Sam\", email=\"sam@example.com\")\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.author,\n\t\t)\n\t\tself.url = f\"/blogs/{self.post.id}/\"\n\tdef test_put_replaces_post_fields(self):\n\t\tresponse = self.client.put(",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tself.other_author",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tself.other_author = Author.objects.create(name=\"Sam\", email=\"sam@example.com\")\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.author,\n\t\t)\n\t\tself.url = f\"/blogs/{self.post.id}/\"\n\tdef test_put_replaces_post_fields(self):\n\t\tresponse = self.client.put(\n\t\t\tself.url,",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tself.post",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.author,\n\t\t)\n\t\tself.url = f\"/blogs/{self.post.id}/\"\n\tdef test_put_replaces_post_fields(self):\n\t\tresponse = self.client.put(\n\t\t\tself.url,\n\t\t\tdata=json.dumps(",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tself.url",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tself.url = f\"/blogs/{self.post.id}/\"\n\tdef test_put_replaces_post_fields(self):\n\t\tresponse = self.client.put(\n\t\t\tself.url,\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"Replaced title\",\n\t\t\t\t\t\"content\": \"Replaced content\",\n\t\t\t\t\t\"author_id\": self.other_author.id,\n\t\t\t\t\t\"category\": \"Django\",",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tresponse",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tresponse = self.client.put(\n\t\t\tself.url,\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"Replaced title\",\n\t\t\t\t\t\"content\": \"Replaced content\",\n\t\t\t\t\t\"author_id\": self.other_author.id,\n\t\t\t\t\t\"category\": \"Django\",\n\t\t\t\t\t\"is_published\": True,\n\t\t\t\t}",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tresponse",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tresponse = self.client.patch(\n\t\t\tself.url,\n\t\t\tdata=json.dumps({\"title\": \"Patched title\"}),\n\t\t\tcontent_type=\"application/json\",\n\t\t)\n\t\tself.assertEqual(response.status_code, 200)\n\t\tself.post.refresh_from_db()\n\t\tself.assertEqual(self.post.title, \"Patched title\")\n\t\tself.assertEqual(self.post.content, \"Original content\")\n\tdef test_delete_returns_no_content(self):",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tresponse",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tresponse = self.client.delete(self.url)\n\t\tself.assertEqual(response.status_code, 204)\n\t\tself.assertFalse(Post.objects.filter(id=self.post.id).exists())\n\tdef test_put_requires_complete_payload(self):\n\t\tresponse = self.client.put(\n\t\t\tself.url,\n\t\t\tdata=json.dumps({\"title\": \"Incomplete\"}),\n\t\t\tcontent_type=\"application/json\",\n\t\t)\n\t\tself.assertEqual(response.status_code, 400)",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tresponse",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tresponse = self.client.put(\n\t\t\tself.url,\n\t\t\tdata=json.dumps({\"title\": \"Incomplete\"}),\n\t\t\tcontent_type=\"application/json\",\n\t\t)\n\t\tself.assertEqual(response.status_code, 400)\n\tdef test_rejects_invalid_json(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata=\"not json\",",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tresponse",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata=\"not json\",\n\t\t\tcontent_type=\"application/json\",\n\t\t)\n\t\tself.assertEqual(response.status_code, 400)\n\tdef test_rejects_unknown_author(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata=json.dumps(",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tresponse",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\"title\": \"A new post\", \"content\": \"Post content\", \"author_id\": 999}\n\t\t\t),\n\t\t\tcontent_type=\"application/json\",\n\t\t)\n\t\tself.assertEqual(response.status_code, 404)\n\tdef test_can_create_without_csrf_token(self):\n\t\tclient = self.client_class(enforce_csrf_checks=True)",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tclient",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tclient = self.client_class(enforce_csrf_checks=True)\n\t\tresponse = client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A Postman post\",\n\t\t\t\t\t\"content\": \"Created through the API\",\n\t\t\t\t\t\"author_id\": self.author.id,\n\t\t\t\t}\n\t\t\t),",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tresponse",
+        "kind": 5,
+        "importPath": "backend.blog.tests",
+        "description": "backend.blog.tests",
+        "peekOfCode": "\t\tresponse = client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A Postman post\",\n\t\t\t\t\t\"content\": \"Created through the API\",\n\t\t\t\t\t\"author_id\": self.author.id,\n\t\t\t\t}\n\t\t\t),\n\t\t\tcontent_type=\"application/json\",",
+        "detail": "backend.blog.tests",
+        "documentation": {}
+    },
+    {
         "label": "urlpatterns",
         "kind": 5,
         "importPath": "backend.blog.urls",
         "description": "backend.blog.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"\", views.home, name=\"home\"),\n    path('inspect/', views.inspect_request),\n    path('counter/<int:count>', views.counter_view)\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.post_list, name=\"post_list\"),\n    path(\"create/\", views.post_create, name=\"post_create\"),\n    path('<uuid:id>', views.post_detail, name='post_view'),\n    path('inspect/', views.inspect_request),\n    path('counter/<int:count>', views.counter_view)\n]",
         "detail": "backend.blog.urls",
+        "documentation": {}
+    },
+    {
+        "label": "post_list",
+        "kind": 2,
+        "importPath": "backend.blog.views",
+        "description": "backend.blog.views",
+        "peekOfCode": "def post_list(request):\n    posts = Post.objects.filter(is_published=True).exclude(views=0).order_by('-views').select_related('author').all()\n    return JsonResponse({\n        'posts': [\n            {\n                'id': str(post.id),\n                'title': post.title,\n                'content': post.content,\n                'author': {\n                        \"id\": post.author.id,",
+        "detail": "backend.blog.views",
+        "documentation": {}
+    },
+    {
+        "label": "post_create",
+        "kind": 2,
+        "importPath": "backend.blog.views",
+        "description": "backend.blog.views",
+        "peekOfCode": "def post_create(request):\n    if request.method != \"POST\":\n        return JsonResponse({\"error\": \"Only POST requests are allowed\"}, status=405)\n    try:\n        data = json.loads(request.body)\n    except (json.JSONDecodeError, UnicodeDecodeError):\n        return JsonResponse({\"error\": \"Request body must contain valid JSON\"}, status=400)\n    if not isinstance(data, dict):\n        return JsonResponse({\"error\": \"Request body must be a JSON object\"}, status=400)\n    missing_fields = [field for field in (\"title\", \"content\", \"author_id\") if not data.get(field)]",
+        "detail": "backend.blog.views",
+        "documentation": {}
+    },
+    {
+        "label": "post_data",
+        "kind": 2,
+        "importPath": "backend.blog.views",
+        "description": "backend.blog.views",
+        "peekOfCode": "def post_data(post):\n    return {\n        \"id\": str(post.id),\n        \"title\": post.title,\n        \"content\": post.content,\n        \"author\": {\n            \"id\": post.author.id,\n            \"name\": post.author.name,\n            \"email\": post.author.email,\n        },",
+        "detail": "backend.blog.views",
+        "documentation": {}
+    },
+    {
+        "label": "post_detail",
+        "kind": 2,
+        "importPath": "backend.blog.views",
+        "description": "backend.blog.views",
+        "peekOfCode": "def post_detail(request, id):\n    try:\n        post = Post.objects.select_related(\"author\").get(id=id)\n    except Post.DoesNotExist:\n        return JsonResponse({'error': 'Post not found'}, status=404)\n    if request.method == \"GET\":\n        if not post.is_published:\n            return JsonResponse({'error': 'Post not found'}, status=404)\n        return JsonResponse(post_data(post))\n    if request.method == \"DELETE\":",
+        "detail": "backend.blog.views",
         "documentation": {}
     },
     {
