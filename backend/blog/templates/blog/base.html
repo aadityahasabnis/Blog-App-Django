@@ -86,6 +86,7 @@
                 <a href="{% url 'post_list' %}">Stories</a>
                 {% if user.is_authenticated %}
                     <span class="muted">Hi, {{ user.username }}</span>
+                    <a href="{% url 'my_posts' %}">My posts</a>
                     <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="button" type="submit">Log out</button></form>
                 {% else %}
                     <a href="{% url 'login' %}">Log in</a>

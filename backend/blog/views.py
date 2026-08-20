@@ -9,7 +9,7 @@ from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .forms import PostForm, SignUpForm
-from .models import Author, Post
+from .models import Post
 
 
 def allPostData(post):
@@ -19,7 +19,7 @@ def allPostData(post):
         "content": post.content,
         "author": {
             "id": post.author.id,
-            "name": post.author.name,
+            "name": post.author.get_full_name() or post.author.username,
             "email": post.author.email,
         },
         "category": post.category,
@@ -38,25 +38,11 @@ def json_object(request):
     return data, None
 
 
-def isAndGetAuthor(author_id):
-    try:
-        return Author.objects.get(id=author_id), None
-    except (Author.DoesNotExist, ValueError, TypeError):
-        return None, JsonResponse({"error": "Author not found"}, status=404)
-
-
-def current_author(user):
-    try:
-        return Author.objects.get(email__iexact=user.email)
-    except Author.DoesNotExist:
-        return None
-
-
 def can_manage_post(user, post):
     return (
         user.is_staff
         or user.is_superuser
-        or post.author.email.casefold() == user.email.casefold()
+        or post.author_id == user.id
     )
 
 def post_list(request):
@@ -67,7 +53,7 @@ def post_list(request):
             Q(title__icontains=search_query)
             | Q(content__icontains=search_query)
             | Q(category__icontains=search_query)
-            | Q(author__name__icontains=search_query)
+            | Q(author__username__icontains=search_query)
         )
 
     posts = posts.order_by("-created_at").order_by("-views")
@@ -78,19 +64,21 @@ def post_list(request):
         {"page_obj": page_obj, "search_query": search_query},
     )
 
+
+@login_required
+def my_posts(request):
+    posts = Post.objects.filter(author=request.user).order_by("-created_at")
+    return render(request, "blog/my_posts.html", {"posts": posts})
+
 @login_required
 def post_create(request):
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
-            author = current_author(request.user)
-            if author is None:
-                form.add_error(None, "Your account is not linked to an author profile.")
-            else:
-                post = form.save(commit=False)
-                post.author = author
-                post.save()
-                return render(request, "blog/post_created.html", {"post": post}, status=201)
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return render(request, "blog/post_created.html", {"post": post}, status=201)
     else:
         form = PostForm()
 
@@ -116,14 +104,10 @@ def post_create_api(request):
             status=400,
         )
 
-    author = current_author(request.user)
-    if author is None:
-        return JsonResponse({"error": "Author profile not found"}, status=400)
-
     post = Post.objects.create(
         title=data["title"],
         content=data["content"],
-        author=author,
+        author=request.user,
         category=data.get("category"),
         is_published=data.get("is_published", False),
     )
@@ -170,7 +154,7 @@ def post_detail(request, id):
     if error:
         return error
 
-    editable_fields = {"title", "content", "author_id", "category", "is_published"}
+    editable_fields = {"title", "content", "category", "is_published"}
     unknown_fields = sorted(set(data) - editable_fields)
     if unknown_fields:
         return JsonResponse(
@@ -179,38 +163,27 @@ def post_detail(request, id):
         )
 
     if request.method == "PUT":
-        missing_fields = [field for field in ("title", "content", "author_id") if not data.get(field)]
+        missing_fields = [field for field in ("title", "content") if not data.get(field)]
         if missing_fields:
             return JsonResponse(
                 {"error": "PUT requires all fields", "fields": missing_fields},
                 status=400,
             )
 
-    if "author_id" in data:
-        author, error = isAndGetAuthor(data["author_id"])
-        if error:
-            return error
-    else:
-        author = post.author
-
     update_data = {
         field: data[field]
         for field in ("title", "content", "category", "is_published")
         if field in data
     }
-    update_data["author"] = author
-
     if request.method == "PUT":
         post.title = update_data["title"]
         post.content = update_data["content"]
-        post.author = update_data["author"]
         post.category = update_data.get("category")
         post.is_published = update_data.get("is_published", False)
         post.save()
     else:
         Post.objects.filter(id=id).update(**update_data)
         post.refresh_from_db()
-        post.author = Author.objects.get(id=post.author_id)
 
     return JsonResponse(allPostData(post), status=200)
 
@@ -256,7 +229,6 @@ def signup_view(request):
     if request.method == "POST" and form.is_valid():
         with transaction.atomic():
             user = form.save()
-            Author.objects.create(name=user.username, email=user.email)
         login(request, user)
         return redirect("post_list")
 

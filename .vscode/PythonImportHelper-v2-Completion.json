@@ -78,6 +78,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -91,6 +107,22 @@
         "description": "django.db",
         "isExtraImport": true,
         "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
         "documentation": {}
     },
     {
@@ -433,12 +465,30 @@
         "documentation": {}
     },
     {
-        "label": "AuthorAdmin",
+        "label": "Migration",
         "kind": 6,
-        "importPath": "backend.blog.admin",
-        "description": "backend.blog.admin",
-        "peekOfCode": "class AuthorAdmin(admin.ModelAdmin):\n    list_display = (\n        \"id\",\n        \"name\",\n        \"email\",\n    )\n@admin.register(Post)\nclass PostAdmin(admin.ModelAdmin):\n    list_display = (\n        \"id\",",
-        "detail": "backend.blog.admin",
+        "importPath": "backend.blog.migrations.0002_post_author_user",
+        "description": "backend.blog.migrations.0002_post_author_user",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"blog\", \"0001_initial\"),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.RunPython(move_posts_to_users, reverse_move_posts),\n        migrations.AlterField(\n            model_name=\"post\",\n            name=\"author\",",
+        "detail": "backend.blog.migrations.0002_post_author_user",
+        "documentation": {}
+    },
+    {
+        "label": "move_posts_to_users",
+        "kind": 2,
+        "importPath": "backend.blog.migrations.0002_post_author_user",
+        "description": "backend.blog.migrations.0002_post_author_user",
+        "peekOfCode": "def move_posts_to_users(apps, schema_editor):\n    Author = apps.get_model(\"blog\", \"Author\")\n    Post = apps.get_model(\"blog\", \"Post\")\n    User = apps.get_model(\"auth\", \"User\")\n    for author in Author.objects.all().iterator():\n        user = User.objects.filter(email__iexact=author.email).first()\n        if user is None:\n            username = author.name.strip() or author.email.split(\"@\", 1)[0]\n            base_username = username[:150]\n            username = base_username",
+        "detail": "backend.blog.migrations.0002_post_author_user",
+        "documentation": {}
+    },
+    {
+        "label": "reverse_move_posts",
+        "kind": 2,
+        "importPath": "backend.blog.migrations.0002_post_author_user",
+        "description": "backend.blog.migrations.0002_post_author_user",
+        "peekOfCode": "def reverse_move_posts(apps, schema_editor):\n    # The old Author rows cannot be reconstructed reliably from User rows.\n    pass\nclass Migration(migrations.Migration):\n    dependencies = [\n        (\"blog\", \"0001_initial\"),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.RunPython(move_posts_to_users, reverse_move_posts),",
+        "detail": "backend.blog.migrations.0002_post_author_user",
         "documentation": {}
     },
     {
@@ -478,20 +528,11 @@
         "documentation": {}
     },
     {
-        "label": "Author",
-        "kind": 6,
-        "importPath": "backend.blog.models",
-        "description": "backend.blog.models",
-        "peekOfCode": "class Author(models.Model):\n    name = models.CharField(max_length=100)\n    email = models.EmailField(unique=True)\n    def __str__(self):\n        return self.name\nclass Post(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    title = models.CharField(max_length=200)\n    author = models.ForeignKey(\n        Author,",
-        "detail": "backend.blog.models",
-        "documentation": {}
-    },
-    {
         "label": "Post",
         "kind": 6,
         "importPath": "backend.blog.models",
         "description": "backend.blog.models",
-        "peekOfCode": "class Post(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    title = models.CharField(max_length=200)\n    author = models.ForeignKey(\n        Author,\n        on_delete=models.CASCADE,\n        related_name=\"posts\",\n    )\n    content = models.TextField()\n    category = models.CharField(",
+        "peekOfCode": "class Post(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    title = models.CharField(max_length=200)\n    author = models.ForeignKey(\n        settings.AUTH_USER_MODEL,\n        on_delete=models.CASCADE,\n        related_name=\"posts\",\n    )\n    content = models.TextField()\n    category = models.CharField(",
         "detail": "backend.blog.models",
         "documentation": {}
     },
@@ -500,7 +541,7 @@
         "kind": 6,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "class PostCreateTests(TestCase):\n\tdef setUp(self):\n\t\tself.author = Author.objects.create(name=\"Aadi\", email=\"aadi@example.com\")\n\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\tdef test_creates_post(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{",
+        "peekOfCode": "class PostCreateTests(TestCase):\n\tdef setUp(self):\n\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\tdef test_creates_post(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A new post\",",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -509,7 +550,7 @@
         "kind": 6,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "class PostDetailMutationTests(TestCase):\n\tdef setUp(self):\n\t\tself.author = Author.objects.create(name=\"Aadi\", email=\"aadi@example.com\")\n\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\t\tself.other_author = Author.objects.create(name=\"Sam\", email=\"sam@example.com\")\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.author,",
+        "peekOfCode": "class PostDetailMutationTests(TestCase):\n\tdef setUp(self):\n\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\t\tself.other_author = User.objects.create_user(\"sam\", \"sam@example.com\", \"password123\")\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.user,\n\t\t\tis_published=True,",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -518,16 +559,7 @@
         "kind": 6,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "class BlogPageTests(TestCase):\n\tdef setUp(self):\n\t\tself.author = Author.objects.create(name=\"Aadi\", email=\"aadi@example.com\")\n\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Published post\",\n\t\t\tcontent=\"Published content\",\n\t\t\tauthor=self.author,\n\t\t\tis_published=True,",
-        "detail": "backend.blog.tests",
-        "documentation": {}
-    },
-    {
-        "label": "\t\tself.author",
-        "kind": 5,
-        "importPath": "backend.blog.tests",
-        "description": "backend.blog.tests",
-        "peekOfCode": "\t\tself.author = Author.objects.create(name=\"Aadi\", email=\"aadi@example.com\")\n\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\tdef test_creates_post(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A new post\",\n\t\t\t\t\t\"content\": \"Post content\",",
+        "peekOfCode": "class BlogPageTests(TestCase):\n\tdef setUp(self):\n\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Published post\",\n\t\t\tcontent=\"Published content\",\n\t\t\tauthor=self.user,\n\t\t\tis_published=True,\n\t\t)",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -536,7 +568,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\tdef test_creates_post(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A new post\",\n\t\t\t\t\t\"content\": \"Post content\",\n\t\t\t\t\t\"author_id\": self.author.id,",
+        "peekOfCode": "\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\tdef test_creates_post(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A new post\",\n\t\t\t\t\t\"content\": \"Post content\",\n\t\t\t\t\t\"category\": \"Django\",",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -545,7 +577,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A new post\",\n\t\t\t\t\t\"content\": \"Post content\",\n\t\t\t\t\t\"author_id\": self.author.id,\n\t\t\t\t\t\"category\": \"Django\",\n\t\t\t\t}\n\t\t\t),",
+        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A new post\",\n\t\t\t\t\t\"content\": \"Post content\",\n\t\t\t\t\t\"category\": \"Django\",\n\t\t\t\t}\n\t\t\t),\n\t\t\tcontent_type=\"application/json\",",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -554,7 +586,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = self.client.get(\"/blogs/create/\")\n\t\tself.assertEqual(response.status_code, 200)\n\t\tself.assertIsInstance(response.context[\"form\"], PostForm)\n\tdef test_form_creates_post(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata={\n\t\t\t\t\"title\": \"A form post\",\n\t\t\t\t\"content\": \"Created with ModelForm\",\n\t\t\t\t\"author\": self.author.id,",
+        "peekOfCode": "\t\tresponse = self.client.get(\"/blogs/create/\")\n\t\tself.assertEqual(response.status_code, 200)\n\t\tself.assertIsInstance(response.context[\"form\"], PostForm)\n\tdef test_form_creates_post(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata={\n\t\t\t\t\"title\": \"A form post\",\n\t\t\t\t\"content\": \"Created with ModelForm\",\n\t\t\t\t\"category\": \"Django\",",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -563,7 +595,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata={\n\t\t\t\t\"title\": \"A form post\",\n\t\t\t\t\"content\": \"Created with ModelForm\",\n\t\t\t\t\"author\": self.author.id,\n\t\t\t\t\"category\": \"Django\",\n\t\t\t\t\"is_published\": \"on\",\n\t\t\t},\n\t\t)",
+        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata={\n\t\t\t\t\"title\": \"A form post\",\n\t\t\t\t\"content\": \"Created with ModelForm\",\n\t\t\t\t\"category\": \"Django\",\n\t\t\t\t\"is_published\": \"on\",\n\t\t\t},\n\t\t)\n\t\tself.assertEqual(response.status_code, 201)",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -572,7 +604,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata={\"author\": self.author.id},\n\t\t)\n\t\tself.assertEqual(response.status_code, 200)\n\t\tself.assertFalse(Post.objects.exists())\n\t\tself.assertIn(\"This field is required.\", response.content.decode())\n\tdef test_anonymous_user_cannot_open_create_form(self):\n\t\tself.client.logout()\n\t\tresponse = self.client.get(\"/blogs/create/\")",
+        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/create/\",\n\t\t\tdata={},\n\t\t)\n\t\tself.assertEqual(response.status_code, 200)\n\t\tself.assertFalse(Post.objects.exists())\n\t\tself.assertIn(\"This field is required.\", response.content.decode())\n\tdef test_anonymous_user_cannot_open_create_form(self):\n\t\tself.client.logout()\n\t\tresponse = self.client.get(\"/blogs/create/\")",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -595,20 +627,11 @@
         "documentation": {}
     },
     {
-        "label": "\t\tself.author",
-        "kind": 5,
-        "importPath": "backend.blog.tests",
-        "description": "backend.blog.tests",
-        "peekOfCode": "\t\tself.author = Author.objects.create(name=\"Aadi\", email=\"aadi@example.com\")\n\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\t\tself.other_author = Author.objects.create(name=\"Sam\", email=\"sam@example.com\")\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.author,\n\t\t\tis_published=True,\n\t\t)",
-        "detail": "backend.blog.tests",
-        "documentation": {}
-    },
-    {
         "label": "\t\tself.user",
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\t\tself.other_author = Author.objects.create(name=\"Sam\", email=\"sam@example.com\")\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.author,\n\t\t\tis_published=True,\n\t\t)\n\t\tself.url = f\"/blogs/{self.post.id}/\"",
+        "peekOfCode": "\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\t\tself.other_author = User.objects.create_user(\"sam\", \"sam@example.com\", \"password123\")\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.user,\n\t\t\tis_published=True,\n\t\t)\n\t\tself.url = f\"/blogs/{self.post.id}/\"",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -617,7 +640,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tself.other_author = Author.objects.create(name=\"Sam\", email=\"sam@example.com\")\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.author,\n\t\t\tis_published=True,\n\t\t)\n\t\tself.url = f\"/blogs/{self.post.id}/\"\n\tdef test_put_replaces_post_fields(self):\n\t\tresponse = self.client.put(",
+        "peekOfCode": "\t\tself.other_author = User.objects.create_user(\"sam\", \"sam@example.com\", \"password123\")\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.user,\n\t\t\tis_published=True,\n\t\t)\n\t\tself.url = f\"/blogs/{self.post.id}/\"\n\tdef test_put_replaces_post_fields(self):\n\t\tresponse = self.client.put(",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -626,7 +649,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.author,\n\t\t\tis_published=True,\n\t\t)\n\t\tself.url = f\"/blogs/{self.post.id}/\"\n\tdef test_put_replaces_post_fields(self):\n\t\tresponse = self.client.put(\n\t\t\tself.url,",
+        "peekOfCode": "\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Original title\",\n\t\t\tcontent=\"Original content\",\n\t\t\tauthor=self.user,\n\t\t\tis_published=True,\n\t\t)\n\t\tself.url = f\"/blogs/{self.post.id}/\"\n\tdef test_put_replaces_post_fields(self):\n\t\tresponse = self.client.put(\n\t\t\tself.url,",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -635,7 +658,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tself.url = f\"/blogs/{self.post.id}/\"\n\tdef test_put_replaces_post_fields(self):\n\t\tresponse = self.client.put(\n\t\t\tself.url,\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"Replaced title\",\n\t\t\t\t\t\"content\": \"Replaced content\",\n\t\t\t\t\t\"author_id\": self.other_author.id,\n\t\t\t\t\t\"category\": \"Django\",",
+        "peekOfCode": "\t\tself.url = f\"/blogs/{self.post.id}/\"\n\tdef test_put_replaces_post_fields(self):\n\t\tresponse = self.client.put(\n\t\t\tself.url,\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"Replaced title\",\n\t\t\t\t\t\"content\": \"Replaced content\",\n\t\t\t\t\t\"category\": \"Django\",\n\t\t\t\t\t\"is_published\": True,",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -644,7 +667,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = self.client.put(\n\t\t\tself.url,\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"Replaced title\",\n\t\t\t\t\t\"content\": \"Replaced content\",\n\t\t\t\t\t\"author_id\": self.other_author.id,\n\t\t\t\t\t\"category\": \"Django\",\n\t\t\t\t\t\"is_published\": True,\n\t\t\t\t}",
+        "peekOfCode": "\t\tresponse = self.client.put(\n\t\t\tself.url,\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"Replaced title\",\n\t\t\t\t\t\"content\": \"Replaced content\",\n\t\t\t\t\t\"category\": \"Django\",\n\t\t\t\t\t\"is_published\": True,\n\t\t\t\t}\n\t\t\t),",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -680,7 +703,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=\"not json\",\n\t\t\tcontent_type=\"application/json\",\n\t\t)\n\t\tself.assertEqual(response.status_code, 400)\n\tdef test_rejects_unknown_author(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps({\"title\": \"A new post\", \"content\": \"Post content\"}),",
+        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=\"not json\",\n\t\t\tcontent_type=\"application/json\",\n\t\t)\n\t\tself.assertEqual(response.status_code, 400)\n\tdef test_uses_authenticated_user_as_author(self):\n\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps({\"title\": \"A new post\", \"content\": \"Post content\"}),",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -689,7 +712,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps({\"title\": \"A new post\", \"content\": \"Post content\"}),\n\t\t\tcontent_type=\"application/json\",\n\t\t)\n\t\tself.assertEqual(response.status_code, 201)\n\tdef test_can_create_without_csrf_token(self):\n\t\tclient = self.client_class(enforce_csrf_checks=True)\n\t\tclient.force_login(self.user)\n\t\tresponse = client.post(",
+        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps({\"title\": \"A new post\", \"content\": \"Post content\"}),\n\t\t\tcontent_type=\"application/json\",\n\t\t)\n\t\tself.assertEqual(response.status_code, 201)\n\t\tself.assertEqual(response.json()[\"author\"][\"id\"], self.user.id)\n\tdef test_can_create_without_csrf_token(self):\n\t\tclient = self.client_class(enforce_csrf_checks=True)\n\t\tclient.force_login(self.user)",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -698,7 +721,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tclient = self.client_class(enforce_csrf_checks=True)\n\t\tclient.force_login(self.user)\n\t\tresponse = client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A Postman post\",\n\t\t\t\t\t\"content\": \"Created through the API\",\n\t\t\t\t\t\"author_id\": self.author.id,\n\t\t\t\t}",
+        "peekOfCode": "\t\tclient = self.client_class(enforce_csrf_checks=True)\n\t\tclient.force_login(self.user)\n\t\tresponse = client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A Postman post\",\n\t\t\t\t\t\"content\": \"Created through the API\",\n\t\t\t\t}\n\t\t\t),",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -707,16 +730,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A Postman post\",\n\t\t\t\t\t\"content\": \"Created through the API\",\n\t\t\t\t\t\"author_id\": self.author.id,\n\t\t\t\t}\n\t\t\t),\n\t\t\tcontent_type=\"application/json\",",
-        "detail": "backend.blog.tests",
-        "documentation": {}
-    },
-    {
-        "label": "\t\tself.author",
-        "kind": 5,
-        "importPath": "backend.blog.tests",
-        "description": "backend.blog.tests",
-        "peekOfCode": "\t\tself.author = Author.objects.create(name=\"Aadi\", email=\"aadi@example.com\")\n\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Published post\",\n\t\t\tcontent=\"Published content\",\n\t\t\tauthor=self.author,\n\t\t\tis_published=True,\n\t\t)\n\tdef test_home_page(self):",
+        "peekOfCode": "\t\tresponse = client.post(\n\t\t\t\"/blogs/api/create/\",\n\t\t\tdata=json.dumps(\n\t\t\t\t{\n\t\t\t\t\t\"title\": \"A Postman post\",\n\t\t\t\t\t\"content\": \"Created through the API\",\n\t\t\t\t}\n\t\t\t),\n\t\t\tcontent_type=\"application/json\",\n\t\t)",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -725,7 +739,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Published post\",\n\t\t\tcontent=\"Published content\",\n\t\t\tauthor=self.author,\n\t\t\tis_published=True,\n\t\t)\n\tdef test_home_page(self):\n\t\tresponse = self.client.get(\"/\")",
+        "peekOfCode": "\t\tself.user = User.objects.create_user(\"aadi\", \"aadi@example.com\", \"password123\")\n\t\tself.client.force_login(self.user)\n\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Published post\",\n\t\t\tcontent=\"Published content\",\n\t\t\tauthor=self.user,\n\t\t\tis_published=True,\n\t\t)\n\tdef test_home_page(self):\n\t\tresponse = self.client.get(\"/\")",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -734,7 +748,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Published post\",\n\t\t\tcontent=\"Published content\",\n\t\t\tauthor=self.author,\n\t\t\tis_published=True,\n\t\t)\n\tdef test_home_page(self):\n\t\tresponse = self.client.get(\"/\")\n\t\tself.assertEqual(response.status_code, 200)\n\t\tself.assertContains(response, \"Read published posts\")",
+        "peekOfCode": "\t\tself.post = Post.objects.create(\n\t\t\ttitle=\"Published post\",\n\t\t\tcontent=\"Published content\",\n\t\t\tauthor=self.user,\n\t\t\tis_published=True,\n\t\t)\n\tdef test_home_page(self):\n\t\tresponse = self.client.get(\"/\")\n\t\tself.assertEqual(response.status_code, 200)\n\t\tself.assertContains(response, \"Read published posts\")",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -770,7 +784,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = self.client.get(\"/blogs/?q=Published\")\n\t\tself.assertContains(response, \"Published post\")\n\t\tself.assertNotContains(response, \"Different topic\")\n\tdef test_list_is_paginated(self):\n\t\tfor index in range(6):\n\t\t\tPost.objects.create(\n\t\t\t\ttitle=f\"Extra post {index}\",\n\t\t\t\tcontent=\"More content\",\n\t\t\t\tauthor=self.author,\n\t\t\t\tis_published=True,",
+        "peekOfCode": "\t\tresponse = self.client.get(\"/blogs/?q=Published\")\n\t\tself.assertContains(response, \"Published post\")\n\t\tself.assertNotContains(response, \"Different topic\")\n\tdef test_list_is_paginated(self):\n\t\tfor index in range(6):\n\t\t\tPost.objects.create(\n\t\t\t\ttitle=f\"Extra post {index}\",\n\t\t\t\tcontent=\"More content\",\n\t\t\t\tauthor=self.user,\n\t\t\t\tis_published=True,",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -779,7 +793,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = self.client.get(\"/blogs/\")\n\t\tself.assertEqual(response.context[\"page_obj\"].paginator.num_pages, 2)\n\t\tself.assertContains(response, \"Page 1 of 2\")\n\tdef test_edit_action_updates_post(self):\n\t\tresponse = self.client.post(\n\t\t\tf\"/blogs/{self.post.id}/edit/\",\n\t\t\tdata={\n\t\t\t\t\"title\": \"Edited post\",\n\t\t\t\t\"content\": \"Edited content\",\n\t\t\t\t\"author\": self.author.id,",
+        "peekOfCode": "\t\tresponse = self.client.get(\"/blogs/\")\n\t\tself.assertEqual(response.context[\"page_obj\"].paginator.num_pages, 2)\n\t\tself.assertContains(response, \"Page 1 of 2\")\n\tdef test_edit_action_updates_post(self):\n\t\tresponse = self.client.post(\n\t\t\tf\"/blogs/{self.post.id}/edit/\",\n\t\t\tdata={\n\t\t\t\t\"title\": \"Edited post\",\n\t\t\t\t\"content\": \"Edited content\",\n\t\t\t\t\"is_published\": \"on\",",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -788,7 +802,7 @@
         "kind": 5,
         "importPath": "backend.blog.tests",
         "description": "backend.blog.tests",
-        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\tf\"/blogs/{self.post.id}/edit/\",\n\t\t\tdata={\n\t\t\t\t\"title\": \"Edited post\",\n\t\t\t\t\"content\": \"Edited content\",\n\t\t\t\t\"author\": self.author.id,\n\t\t\t\t\"is_published\": \"on\",\n\t\t\t},\n\t\t)\n\t\tself.assertEqual(response.status_code, 302)",
+        "peekOfCode": "\t\tresponse = self.client.post(\n\t\t\tf\"/blogs/{self.post.id}/edit/\",\n\t\t\tdata={\n\t\t\t\t\"title\": \"Edited post\",\n\t\t\t\t\"content\": \"Edited content\",\n\t\t\t\t\"is_published\": \"on\",\n\t\t\t},\n\t\t)\n\t\tself.assertEqual(response.status_code, 302)\n\t\tself.post.refresh_from_db()",
         "detail": "backend.blog.tests",
         "documentation": {}
     },
@@ -806,7 +820,7 @@
         "kind": 5,
         "importPath": "backend.blog.urls",
         "description": "backend.blog.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"\", views.post_list, name=\"post_list\"),\n    path(\"create/\", views.post_create, name=\"post_create\"),\n    path(\"api/create/\", views.post_create_api, name=\"post_create_api\"),\n    path(\"signup/\", views.signup_view, name=\"signup\"),\n    path(\"login/\", views.login_view, name=\"login\"),\n    path(\"logout/\", views.logout_view, name=\"logout\"),\n    path('<uuid:id>/edit/', views.post_edit, name='post_edit'),\n    path('<uuid:id>/delete/', views.post_delete, name='post_delete'),\n    path('<uuid:id>/', views.post_detail, name='post_view'),",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.post_list, name=\"post_list\"),\n    path(\"create/\", views.post_create, name=\"post_create\"),\n    path(\"api/create/\", views.post_create_api, name=\"post_create_api\"),\n    path(\"signup/\", views.signup_view, name=\"signup\"),\n    path(\"login/\", views.login_view, name=\"login\"),\n    path(\"logout/\", views.logout_view, name=\"logout\"),\n    path(\"mine/\", views.my_posts, name=\"my_posts\"),\n    path('<uuid:id>/edit/', views.post_edit, name='post_edit'),\n    path('<uuid:id>/delete/', views.post_delete, name='post_delete'),",
         "detail": "backend.blog.urls",
         "documentation": {}
     },
@@ -815,7 +829,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def allPostData(post):\n    return {\n        \"id\": str(post.id),\n        \"title\": post.title,\n        \"content\": post.content,\n        \"author\": {\n            \"id\": post.author.id,\n            \"name\": post.author.name,\n            \"email\": post.author.email,\n        },",
+        "peekOfCode": "def allPostData(post):\n    return {\n        \"id\": str(post.id),\n        \"title\": post.title,\n        \"content\": post.content,\n        \"author\": {\n            \"id\": post.author.id,\n            \"name\": post.author.get_full_name() or post.author.username,\n            \"email\": post.author.email,\n        },",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -824,25 +838,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def json_object(request):\n    try:\n        data = json.loads(request.body)\n    except (json.JSONDecodeError, UnicodeDecodeError):\n        return None, JsonResponse({\"error\": \"Request body must contain valid JSON\"}, status=400)\n    if not isinstance(data, dict):\n        return None, JsonResponse({\"error\": \"Request body must be a JSON object\"}, status=400)\n    return data, None\ndef isAndGetAuthor(author_id):\n    try:",
-        "detail": "backend.blog.views",
-        "documentation": {}
-    },
-    {
-        "label": "isAndGetAuthor",
-        "kind": 2,
-        "importPath": "backend.blog.views",
-        "description": "backend.blog.views",
-        "peekOfCode": "def isAndGetAuthor(author_id):\n    try:\n        return Author.objects.get(id=author_id), None\n    except (Author.DoesNotExist, ValueError, TypeError):\n        return None, JsonResponse({\"error\": \"Author not found\"}, status=404)\ndef current_author(user):\n    try:\n        return Author.objects.get(email__iexact=user.email)\n    except Author.DoesNotExist:\n        return None",
-        "detail": "backend.blog.views",
-        "documentation": {}
-    },
-    {
-        "label": "current_author",
-        "kind": 2,
-        "importPath": "backend.blog.views",
-        "description": "backend.blog.views",
-        "peekOfCode": "def current_author(user):\n    try:\n        return Author.objects.get(email__iexact=user.email)\n    except Author.DoesNotExist:\n        return None\ndef can_manage_post(user, post):\n    return (\n        user.is_staff\n        or user.is_superuser\n        or post.author.email.casefold() == user.email.casefold()",
+        "peekOfCode": "def json_object(request):\n    try:\n        data = json.loads(request.body)\n    except (json.JSONDecodeError, UnicodeDecodeError):\n        return None, JsonResponse({\"error\": \"Request body must contain valid JSON\"}, status=400)\n    if not isinstance(data, dict):\n        return None, JsonResponse({\"error\": \"Request body must be a JSON object\"}, status=400)\n    return data, None\ndef can_manage_post(user, post):\n    return (",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -851,7 +847,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def can_manage_post(user, post):\n    return (\n        user.is_staff\n        or user.is_superuser\n        or post.author.email.casefold() == user.email.casefold()\n    )\ndef post_list(request):\n    search_query = request.GET.get(\"q\", \"\").strip()\n    posts = Post.objects.filter(is_published=True).select_related(\"author\")\n    if search_query:",
+        "peekOfCode": "def can_manage_post(user, post):\n    return (\n        user.is_staff\n        or user.is_superuser\n        or post.author_id == user.id\n    )\ndef post_list(request):\n    search_query = request.GET.get(\"q\", \"\").strip()\n    posts = Post.objects.filter(is_published=True).select_related(\"author\")\n    if search_query:",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -860,7 +856,16 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def post_list(request):\n    search_query = request.GET.get(\"q\", \"\").strip()\n    posts = Post.objects.filter(is_published=True).select_related(\"author\")\n    if search_query:\n        posts = posts.filter(\n            Q(title__icontains=search_query)\n            | Q(content__icontains=search_query)\n            | Q(category__icontains=search_query)\n            | Q(author__name__icontains=search_query)\n        )",
+        "peekOfCode": "def post_list(request):\n    search_query = request.GET.get(\"q\", \"\").strip()\n    posts = Post.objects.filter(is_published=True).select_related(\"author\")\n    if search_query:\n        posts = posts.filter(\n            Q(title__icontains=search_query)\n            | Q(content__icontains=search_query)\n            | Q(category__icontains=search_query)\n            | Q(author__username__icontains=search_query)\n        )",
+        "detail": "backend.blog.views",
+        "documentation": {}
+    },
+    {
+        "label": "my_posts",
+        "kind": 2,
+        "importPath": "backend.blog.views",
+        "description": "backend.blog.views",
+        "peekOfCode": "def my_posts(request):\n    posts = Post.objects.filter(author=request.user).order_by(\"-created_at\")\n    return render(request, \"blog/my_posts.html\", {\"posts\": posts})\n@login_required\ndef post_create(request):\n    if request.method == \"POST\":\n        form = PostForm(request.POST)\n        if form.is_valid():\n            post = form.save(commit=False)\n            post.author = request.user",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -869,7 +874,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def post_create(request):\n    if request.method == \"POST\":\n        form = PostForm(request.POST)\n        if form.is_valid():\n            author = current_author(request.user)\n            if author is None:\n                form.add_error(None, \"Your account is not linked to an author profile.\")\n            else:\n                post = form.save(commit=False)\n                post.author = author",
+        "peekOfCode": "def post_create(request):\n    if request.method == \"POST\":\n        form = PostForm(request.POST)\n        if form.is_valid():\n            post = form.save(commit=False)\n            post.author = request.user\n            post.save()\n            return render(request, \"blog/post_created.html\", {\"post\": post}, status=201)\n    else:\n        form = PostForm()",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -914,7 +919,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def home(request):\n    return render(request, \"blog/home.html\")\ndef signup_view(request):\n    if request.user.is_authenticated:\n        return redirect(\"post_list\")\n    form = SignUpForm(request.POST or None)\n    if request.method == \"POST\" and form.is_valid():\n        with transaction.atomic():\n            user = form.save()\n            Author.objects.create(name=user.username, email=user.email)",
+        "peekOfCode": "def home(request):\n    return render(request, \"blog/home.html\")\ndef signup_view(request):\n    if request.user.is_authenticated:\n        return redirect(\"post_list\")\n    form = SignUpForm(request.POST or None)\n    if request.method == \"POST\" and form.is_valid():\n        with transaction.atomic():\n            user = form.save()\n        login(request, user)",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -923,7 +928,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def signup_view(request):\n    if request.user.is_authenticated:\n        return redirect(\"post_list\")\n    form = SignUpForm(request.POST or None)\n    if request.method == \"POST\" and form.is_valid():\n        with transaction.atomic():\n            user = form.save()\n            Author.objects.create(name=user.username, email=user.email)\n        login(request, user)\n        return redirect(\"post_list\")",
+        "peekOfCode": "def signup_view(request):\n    if request.user.is_authenticated:\n        return redirect(\"post_list\")\n    form = SignUpForm(request.POST or None)\n    if request.method == \"POST\" and form.is_valid():\n        with transaction.atomic():\n            user = form.save()\n        login(request, user)\n        return redirect(\"post_list\")\n    return render(",
         "detail": "backend.blog.views",
         "documentation": {}
     },

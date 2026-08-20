@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+{% block title %}My posts | Field Notes{% endblock %}
+{% block content %}
+<main class="page">
+    <section class="hero">
+        <div class="hero-copy">
+            <div class="eyebrow">Your writing</div>
+            <h1>My posts.</h1>
+            <p>Manage the stories you have created. Only you and site administrators can change them.</p>
+        </div>
+        <a class="button" href="{% url 'post_create' %}">Write a post</a>
+    </section>
+    <section class="post-grid">
+        {% for post in posts %}
+            <article class="post-card">
+                <div>
+                    {% if post.category %}<span class="category">{{ post.category }}</span>{% endif %}
+                    <h2>{{ post.title }}</h2>
+                    <p class="card-excerpt">{{ post.content|truncatewords:30 }}</p>
+                </div>
+                <div>
+                    <div class="meta">
+                        <span>{{ post.created_at|date:"M j, Y" }}</span>
+                        <span>{{ post.views }} views</span>
+                        <span>{% if post.is_published %}Published{% else %}Draft{% endif %}</span>
+                    </div>
+                    <p class="article-actions">
+                        <a href="{% url 'post_edit' post.id %}">Edit</a>
+                        <a class="danger" href="{% url 'post_delete' post.id %}">Delete</a>
+                    </p>
+                </div>
+            </article>
+        {% empty %}
+            <p class="empty">You have not written any posts yet.</p>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

@@ -3,13 +3,12 @@ import json
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from .models import Author, Post
+from .models import Post
 from .forms import PostForm
 
 # Create your tests here.
 class PostCreateTests(TestCase):
 	def setUp(self):
-		self.author = Author.objects.create(name="Aadi", email="aadi@example.com")
 		self.user = User.objects.create_user("aadi", "aadi@example.com", "password123")
 		self.client.force_login(self.user)
 
@@ -20,7 +19,6 @@ class PostCreateTests(TestCase):
 				{
 					"title": "A new post",
 					"content": "Post content",
-					"author_id": self.author.id,
 					"category": "Django",
 				}
 			),
@@ -44,7 +42,6 @@ class PostCreateTests(TestCase):
 			data={
 				"title": "A form post",
 				"content": "Created with ModelForm",
-				"author": self.author.id,
 				"category": "Django",
 				"is_published": "on",
 			},
@@ -57,7 +54,7 @@ class PostCreateTests(TestCase):
 	def test_form_rejects_missing_required_fields(self):
 		response = self.client.post(
 			"/blogs/create/",
-			data={"author": self.author.id},
+			data={},
 		)
 
 		self.assertEqual(response.status_code, 200)
@@ -87,19 +84,18 @@ class PostCreateTests(TestCase):
 
 		self.assertEqual(response.status_code, 302)
 		self.assertTrue(User.objects.filter(username="newwriter").exists())
-		self.assertTrue(Author.objects.filter(email="writer@example.com").exists())
+		self.assertTrue(User.objects.filter(email="writer@example.com").exists())
 
 
 class PostDetailMutationTests(TestCase):
 	def setUp(self):
-		self.author = Author.objects.create(name="Aadi", email="aadi@example.com")
 		self.user = User.objects.create_user("aadi", "aadi@example.com", "password123")
 		self.client.force_login(self.user)
-		self.other_author = Author.objects.create(name="Sam", email="sam@example.com")
+		self.other_author = User.objects.create_user("sam", "sam@example.com", "password123")
 		self.post = Post.objects.create(
 			title="Original title",
 			content="Original content",
-			author=self.author,
+			author=self.user,
 			is_published=True,
 		)
 		self.url = f"/blogs/{self.post.id}/"
@@ -111,7 +107,6 @@ class PostDetailMutationTests(TestCase):
 				{
 					"title": "Replaced title",
 					"content": "Replaced content",
-					"author_id": self.other_author.id,
 					"category": "Django",
 					"is_published": True,
 				}
@@ -122,7 +117,7 @@ class PostDetailMutationTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.post.refresh_from_db()
 		self.assertEqual(self.post.title, "Replaced title")
-		self.assertEqual(self.post.author, self.other_author)
+		self.assertEqual(self.post.author, self.user)
 
 	def test_patch_updates_only_supplied_fields(self):
 		response = self.client.patch(
@@ -160,7 +155,7 @@ class PostDetailMutationTests(TestCase):
 
 		self.assertEqual(response.status_code, 400)
 
-	def test_rejects_unknown_author(self):
+	def test_uses_authenticated_user_as_author(self):
 		response = self.client.post(
 			"/blogs/api/create/",
 			data=json.dumps({"title": "A new post", "content": "Post content"}),
@@ -168,6 +163,7 @@ class PostDetailMutationTests(TestCase):
 		)
 
 		self.assertEqual(response.status_code, 201)
+		self.assertEqual(response.json()["author"]["id"], self.user.id)
 
 	def test_can_create_without_csrf_token(self):
 		client = self.client_class(enforce_csrf_checks=True)
@@ -178,7 +174,6 @@ class PostDetailMutationTests(TestCase):
 				{
 					"title": "A Postman post",
 					"content": "Created through the API",
-					"author_id": self.author.id,
 				}
 			),
 			content_type="application/json",
@@ -189,13 +184,12 @@ class PostDetailMutationTests(TestCase):
 
 class BlogPageTests(TestCase):
 	def setUp(self):
-		self.author = Author.objects.create(name="Aadi", email="aadi@example.com")
 		self.user = User.objects.create_user("aadi", "aadi@example.com", "password123")
 		self.client.force_login(self.user)
 		self.post = Post.objects.create(
 			title="Published post",
 			content="Published content",
-			author=self.author,
+			author=self.user,
 			is_published=True,
 		)
 
@@ -222,7 +216,7 @@ class BlogPageTests(TestCase):
 		Post.objects.create(
 			title="Different topic",
 			content="Something unrelated",
-			author=self.author,
+			author=self.user,
 			is_published=True,
 		)
 
@@ -236,7 +230,7 @@ class BlogPageTests(TestCase):
 			Post.objects.create(
 				title=f"Extra post {index}",
 				content="More content",
-				author=self.author,
+				author=self.user,
 				is_published=True,
 			)
 
@@ -251,7 +245,6 @@ class BlogPageTests(TestCase):
 			data={
 				"title": "Edited post",
 				"content": "Edited content",
-				"author": self.author.id,
 				"is_published": "on",
 			},
 		)

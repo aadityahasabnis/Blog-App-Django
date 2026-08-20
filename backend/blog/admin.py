@@ -1,14 +1,5 @@
-from .models import Author, Post
+from .models import Post
 from django.contrib import admin
-
-# Register your models here.
-@admin.register(Author)
-class AuthorAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "name",
-        "email",
-    )
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -32,7 +23,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = (
         "title",
         "content",
-        "author__name",
+        "author__username",
     )
 
     ordering = (

@@ -7,15 +7,11 @@
         <p class="eyebrow">{% if post.category %}{{ post.category }}{% else %}Field Notes{% endif %}</p>
         <h1>{{ post.title }}</h1>
         <div class="meta">
-            <span>By {{ post.author.name }}</span>
+            <span>By {{ post.author.username }}</span>
             <span>{{ post.created_at|date:"F j, Y" }}</span>
             <span>{{ post.views }} views</span>
         </div>
         <div class="article-body">{{ post.content|linebreaks }}</div>
-        <div class="article-actions">
-            <a class="button" href="{% url 'post_edit' post.id %}">Edit post</a>
-            <a class="muted" href="{% url 'post_delete' post.id %}">Delete</a>
-        </div>
     </article>
 </main>
 {% endblock %}
