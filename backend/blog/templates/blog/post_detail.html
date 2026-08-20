@@ -10,8 +10,77 @@
             <span>By {{ post.author.username }}</span>
             <span>{{ post.created_at|date:"F j, Y" }}</span>
             <span>{{ post.views }} views</span>
+            <span>{{ post.comment_count }} comment{{ post.comment_count|pluralize }}</span>
         </div>
         <div class="article-body">{{ post.content|linebreaks }}</div>
     </article>
+
+    <section class="comments" id="comments">
+        <p class="eyebrow">Discussion</p>
+        <h2>{{ comment_count }} comment{{ comment_count|pluralize }}</h2>
+
+        {% if user.is_authenticated %}
+            <form class="comment-form" method="post" action="{% url 'create_comment' post.id %}">
+                {% csrf_token %}
+                {% if comment_form.non_field_errors %}<ul class="errors">{{ comment_form.non_field_errors }}</ul>{% endif %}
+                <div class="field">
+                    {{ comment_form.content.label_tag }}
+                    {{ comment_form.content }}
+                    {% if comment_form.content.errors %}<ul class="errors">{{ comment_form.content.errors }}</ul>{% endif %}
+                </div>
+                <div class="form-actions">
+                    <button class="button" type="submit">Post comment</button>
+                </div>
+            </form>
+        {% else %}
+            <p class="muted">
+                <a href="{% url 'login' %}?next={% url 'post_view' post.id %}#comments">Log in</a>
+                to add a comment.
+            </p>
+        {% endif %}
+
+        <div id="comment-list">
+            {% include "comments/comment_items.html" %}
+        </div>
+
+        {% if comments_page.has_next %}
+            <button
+                class="button load-more"
+                id="load-more-comments"
+                type="button"
+                data-url="{% url 'load_comments' post.id %}"
+                data-next-page="{{ comments_page.next_page_number }}"
+                data-total-pages="{{ comments_page.paginator.num_pages }}"
+            >
+                Load more comments
+            </button>
+        {% endif %}
+    </section>
 </main>
+<script>
+    const loadMore = document.querySelector("#load-more-comments");
+    const commentList = document.querySelector("#comment-list");
+    loadMore?.addEventListener("click", async () => {
+        const url = new URL(loadMore.dataset.url, window.location.origin);
+        url.searchParams.set("page", loadMore.dataset.nextPage);
+        loadMore.disabled = true;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Could not load comments");
+            const html = await response.text();
+            const fragment = document.createRange().createContextualFragment(html);
+            commentList.append(fragment);
+            const nextPage = Number(loadMore.dataset.nextPage) + 1;
+            const totalPages = Number(loadMore.dataset.totalPages);
+            if (nextPage > totalPages) {
+                loadMore.remove();
+            } else {
+                loadMore.dataset.nextPage = String(nextPage);
+                loadMore.disabled = false;
+            }
+        } catch {
+            loadMore.disabled = false;
+        }
+    });
+</script>
 {% endblock %}

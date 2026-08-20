@@ -110,6 +110,38 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "settings",
         "importPath": "django.conf",
         "description": "django.conf",
@@ -123,6 +155,22 @@
         "description": "django.conf",
         "isExtraImport": true,
         "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
         "documentation": {}
     },
     {
@@ -147,6 +195,22 @@
         "description": "django.apps",
         "isExtraImport": true,
         "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
         "documentation": {}
     },
     {
@@ -190,6 +254,38 @@
         "documentation": {}
     },
     {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "Count",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "F",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Q",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -204,6 +300,22 @@
         "description": "django.test",
         "isExtraImport": true,
         "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
         "documentation": {}
     },
     {
@@ -255,6 +367,30 @@
         "documentation": {}
     },
     {
+        "label": "get_object_or_404",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
         "label": "HttpResponse",
         "importPath": "django.http",
         "description": "django.http",
@@ -271,6 +407,14 @@
         "documentation": {}
     },
     {
+        "label": "HttpResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
         "label": "Paginator",
         "importPath": "django.core.paginator",
         "description": "django.core.paginator",
@@ -279,19 +423,27 @@
         "documentation": {}
     },
     {
-        "label": "F",
-        "importPath": "django.db.models",
-        "description": "django.db.models",
+        "label": "EmptyPage",
+        "importPath": "django.core.paginator",
+        "description": "django.core.paginator",
         "isExtraImport": true,
-        "detail": "django.db.models",
+        "detail": "django.core.paginator",
         "documentation": {}
     },
     {
-        "label": "Q",
-        "importPath": "django.db.models",
-        "description": "django.db.models",
+        "label": "PageNotAnInteger",
+        "importPath": "django.core.paginator",
+        "description": "django.core.paginator",
         "isExtraImport": true,
-        "detail": "django.db.models",
+        "detail": "django.core.paginator",
+        "documentation": {}
+    },
+    {
+        "label": "Paginator",
+        "importPath": "django.core.paginator",
+        "description": "django.core.paginator",
+        "isExtraImport": true,
+        "detail": "django.core.paginator",
         "documentation": {}
     },
     {
@@ -319,11 +471,51 @@
         "documentation": {}
     },
     {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
         "label": "csrf_exempt",
         "importPath": "django.views.decorators.csrf",
         "description": "django.views.decorators.csrf",
         "isExtraImport": true,
         "detail": "django.views.decorators.csrf",
+        "documentation": {}
+    },
+    {
+        "label": "CommentForm",
+        "importPath": "comments.forms",
+        "description": "comments.forms",
+        "isExtraImport": true,
+        "detail": "comments.forms",
+        "documentation": {}
+    },
+    {
+        "label": "comment_page",
+        "importPath": "comments.views",
+        "description": "comments.views",
+        "isExtraImport": true,
+        "detail": "comments.views",
+        "documentation": {}
+    },
+    {
+        "label": "Post",
+        "importPath": "blog.models",
+        "description": "blog.models",
+        "isExtraImport": true,
+        "detail": "blog.models",
+        "documentation": {}
+    },
+    {
+        "label": "Post",
+        "importPath": "blog.models",
+        "description": "blog.models",
+        "isExtraImport": true,
+        "detail": "blog.models",
         "documentation": {}
     },
     {
@@ -496,7 +688,7 @@
         "kind": 6,
         "importPath": "backend.blog.admin",
         "description": "backend.blog.admin",
-        "peekOfCode": "class PostAdmin(admin.ModelAdmin):\n    list_display = (\n        \"id\",\n        \"title\",\n        \"author\",\n        \"category\",\n        \"is_published\",\n        \"views\",\n        \"created_at\",\n    )",
+        "peekOfCode": "class PostAdmin(admin.ModelAdmin):\n    list_display = (\n        \"id\",\n        \"title\",\n        \"author\",\n        \"category\",\n        \"is_published\",\n        \"views\",\n        \"comment_count\",\n        \"created_at\",",
         "detail": "backend.blog.admin",
         "documentation": {}
     },
@@ -528,11 +720,20 @@
         "documentation": {}
     },
     {
+        "label": "PostQuerySet",
+        "kind": 6,
+        "importPath": "backend.blog.models",
+        "description": "backend.blog.models",
+        "peekOfCode": "class PostQuerySet(models.QuerySet):\n    def with_comment_count(self):\n        return self.annotate(comment_count=Count(\"comments\"))\nclass Post(models.Model):\n    objects = PostQuerySet.as_manager()\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    title = models.CharField(max_length=200)\n    author = models.ForeignKey(\n        settings.AUTH_USER_MODEL,\n        on_delete=models.CASCADE,",
+        "detail": "backend.blog.models",
+        "documentation": {}
+    },
+    {
         "label": "Post",
         "kind": 6,
         "importPath": "backend.blog.models",
         "description": "backend.blog.models",
-        "peekOfCode": "class Post(models.Model):\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    title = models.CharField(max_length=200)\n    author = models.ForeignKey(\n        settings.AUTH_USER_MODEL,\n        on_delete=models.CASCADE,\n        related_name=\"posts\",\n    )\n    content = models.TextField()\n    category = models.CharField(",
+        "peekOfCode": "class Post(models.Model):\n    objects = PostQuerySet.as_manager()\n    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    title = models.CharField(max_length=200)\n    author = models.ForeignKey(\n        settings.AUTH_USER_MODEL,\n        on_delete=models.CASCADE,\n        related_name=\"posts\",\n    )\n    content = models.TextField()",
         "detail": "backend.blog.models",
         "documentation": {}
     },
@@ -838,7 +1039,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def json_object(request):\n    try:\n        data = json.loads(request.body)\n    except (json.JSONDecodeError, UnicodeDecodeError):\n        return None, JsonResponse({\"error\": \"Request body must contain valid JSON\"}, status=400)\n    if not isinstance(data, dict):\n        return None, JsonResponse({\"error\": \"Request body must be a JSON object\"}, status=400)\n    return data, None\ndef can_manage_post(user, post):\n    return (",
+        "peekOfCode": "def json_object(request):\n    try:\n        data = json.loads(request.body)\n    except (json.JSONDecodeError, UnicodeDecodeError):\n        return None, JsonResponse({\"error\": \"Request body must contain valid JSON\"}, status=400)\n    if not isinstance(data, dict):\n        return None, JsonResponse({\"error\": \"Request body must be a JSON object\"}, status=400)\n    return data, None\n# helper function\ndef can_manage_post(user, post):",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -847,7 +1048,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def can_manage_post(user, post):\n    return (\n        user.is_staff\n        or user.is_superuser\n        or post.author_id == user.id\n    )\ndef post_list(request):\n    search_query = request.GET.get(\"q\", \"\").strip()\n    posts = Post.objects.filter(is_published=True).select_related(\"author\")\n    if search_query:",
+        "peekOfCode": "def can_manage_post(user, post):\n    return (\n        user.is_staff\n        or user.is_superuser\n        or post.author_id == user.id\n    )\n# GET /blogs/\ndef post_list(request):\n    search_query = request.GET.get(\"q\", \"\").strip()\n    posts = Post.objects.filter(is_published=True).select_related(\"author\").with_comment_count()",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -856,7 +1057,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def post_list(request):\n    search_query = request.GET.get(\"q\", \"\").strip()\n    posts = Post.objects.filter(is_published=True).select_related(\"author\")\n    if search_query:\n        posts = posts.filter(\n            Q(title__icontains=search_query)\n            | Q(content__icontains=search_query)\n            | Q(category__icontains=search_query)\n            | Q(author__username__icontains=search_query)\n        )",
+        "peekOfCode": "def post_list(request):\n    search_query = request.GET.get(\"q\", \"\").strip()\n    posts = Post.objects.filter(is_published=True).select_related(\"author\").with_comment_count()\n    if search_query:\n        posts = posts.filter(\n            Q(title__icontains=search_query)\n            | Q(content__icontains=search_query)\n            | Q(category__icontains=search_query)\n            | Q(author__username__icontains=search_query)\n        )",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -865,7 +1066,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def my_posts(request):\n    posts = Post.objects.filter(author=request.user).order_by(\"-created_at\")\n    return render(request, \"blog/my_posts.html\", {\"posts\": posts})\n@login_required\ndef post_create(request):\n    if request.method == \"POST\":\n        form = PostForm(request.POST)\n        if form.is_valid():\n            post = form.save(commit=False)\n            post.author = request.user",
+        "peekOfCode": "def my_posts(request):\n    posts = Post.objects.filter(author=request.user).with_comment_count().order_by(\"-created_at\")\n    return render(request, \"blog/my_posts.html\", {\"posts\": posts})\n# /blogs/create/\n@login_required\ndef post_create(request):\n    if request.method == \"POST\":\n        form = PostForm(request.POST)\n        if form.is_valid():\n            post = form.save(commit=False)",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -892,7 +1093,7 @@
         "kind": 2,
         "importPath": "backend.blog.views",
         "description": "backend.blog.views",
-        "peekOfCode": "def post_detail(request, id):\n    try:\n        post = Post.objects.select_related(\"author\").get(id=id)\n    except Post.DoesNotExist:\n        return JsonResponse({'error': 'Post not found'}, status=404)\n    if request.method == \"GET\":\n        if not post.is_published:\n            return JsonResponse({'error': 'Post not found'}, status=404)\n        Post.objects.filter(id=post.id).update(views=F(\"views\") + 1)\n        post.refresh_from_db()",
+        "peekOfCode": "def post_detail(request, id):\n    try:\n        post = Post.objects.select_related(\"author\").with_comment_count().get(id=id)\n    except Post.DoesNotExist:\n        return JsonResponse({'error': 'Post not found'}, status=404)\n    if request.method == \"GET\":\n        if not post.is_published:\n            return JsonResponse({'error': 'Post not found'}, status=404)\n        Post.objects.filter(id=post.id).update(views=F(\"views\") + 1)\n        post.views += 1",
         "detail": "backend.blog.views",
         "documentation": {}
     },
@@ -969,6 +1170,150 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.comments.migrations.0001_initial",
+        "description": "backend.comments.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        ('blog', '0002_post_author_user'),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Comment',\n            fields=[",
+        "detail": "backend.comments.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.comments.migrations.0002_alter_comment_options",
+        "description": "backend.comments.migrations.0002_alter_comment_options",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('comments', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterModelOptions(\n            name='comment',\n            options={'ordering': ['-created_at']},\n        ),\n    ]",
+        "detail": "backend.comments.migrations.0002_alter_comment_options",
+        "documentation": {}
+    },
+    {
+        "label": "CommentAdmin",
+        "kind": 6,
+        "importPath": "backend.comments.admin",
+        "description": "backend.comments.admin",
+        "peekOfCode": "class CommentAdmin(admin.ModelAdmin):\n    list_display = (\"author\", \"content\", \"post\", \"created_at\")\n    search_fields = (\"content\", \"author__username\", \"post__title\")\n    list_filter = (\"created_at\",)",
+        "detail": "backend.comments.admin",
+        "documentation": {}
+    },
+    {
+        "label": "CommentsConfig",
+        "kind": 6,
+        "importPath": "backend.comments.apps",
+        "description": "backend.comments.apps",
+        "peekOfCode": "class CommentsConfig(AppConfig):\n    name = 'comments'",
+        "detail": "backend.comments.apps",
+        "documentation": {}
+    },
+    {
+        "label": "CommentForm",
+        "kind": 6,
+        "importPath": "backend.comments.forms",
+        "description": "backend.comments.forms",
+        "peekOfCode": "class CommentForm(forms.ModelForm):\n    class Meta:\n        model = Comment\n        fields = [\"content\"]\n        widgets = {\n            \"content\": forms.Textarea(\n                attrs={\n                    \"rows\": 4,\n                    \"placeholder\": \"Share your thoughts on this story\",\n                }",
+        "detail": "backend.comments.forms",
+        "documentation": {}
+    },
+    {
+        "label": "Comment",
+        "kind": 6,
+        "importPath": "backend.comments.models",
+        "description": "backend.comments.models",
+        "peekOfCode": "class Comment(models.Model):\n    post = models.ForeignKey(\n        Post,\n        on_delete=models.CASCADE,\n        related_name=\"comments\"\n    )\n    author = models.ForeignKey(\n        User,\n        on_delete=models.CASCADE,\n        related_name=\"comments\"",
+        "detail": "backend.comments.models",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "backend.comments.urls",
+        "description": "backend.comments.urls",
+        "peekOfCode": "urlpatterns = [\n    path(\"comments/mine/\", views.my_comments, name=\"my_comments\"),\n    path(\"comments/<int:comment_id>/edit/\", views.edit_comment, name=\"edit_comment\"),\n    path(\"comments/<int:comment_id>/delete/\", views.delete_comment, name=\"delete_comment\"),\n    path(\"<uuid:post_id>/comments/\", views.create_comment, name=\"create_comment\"),\n    path(\"<uuid:post_id>/comments/load/\", views.load_comments, name=\"load_comments\"),\n]",
+        "detail": "backend.comments.urls",
+        "documentation": {}
+    },
+    {
+        "label": "comments_for_post",
+        "kind": 2,
+        "importPath": "backend.comments.views",
+        "description": "backend.comments.views",
+        "peekOfCode": "def comments_for_post(post):\n    return post.comments.select_related(\"author\").order_by(\"-created_at\")\ndef comment_page(post, page_number):\n    paginator = Paginator(comments_for_post(post), COMMENTS_PER_PAGE)\n    try:\n        return paginator.page(page_number)\n    except (PageNotAnInteger, EmptyPage):\n        return None\ndef can_manage_comment(user, comment):\n    return user.is_authenticated and comment.author_id == user.id",
+        "detail": "backend.comments.views",
+        "documentation": {}
+    },
+    {
+        "label": "comment_page",
+        "kind": 2,
+        "importPath": "backend.comments.views",
+        "description": "backend.comments.views",
+        "peekOfCode": "def comment_page(post, page_number):\n    paginator = Paginator(comments_for_post(post), COMMENTS_PER_PAGE)\n    try:\n        return paginator.page(page_number)\n    except (PageNotAnInteger, EmptyPage):\n        return None\ndef can_manage_comment(user, comment):\n    return user.is_authenticated and comment.author_id == user.id\n@login_required\ndef create_comment(request, post_id):",
+        "detail": "backend.comments.views",
+        "documentation": {}
+    },
+    {
+        "label": "can_manage_comment",
+        "kind": 2,
+        "importPath": "backend.comments.views",
+        "description": "backend.comments.views",
+        "peekOfCode": "def can_manage_comment(user, comment):\n    return user.is_authenticated and comment.author_id == user.id\n@login_required\ndef create_comment(request, post_id):\n    post = get_object_or_404(Post, id=post_id, is_published=True)\n    if request.method != \"POST\":\n        return redirect(\"post_view\", id=post.id)\n    form = CommentForm(request.POST)\n    if form.is_valid():\n        comment = form.save(commit=False)",
+        "detail": "backend.comments.views",
+        "documentation": {}
+    },
+    {
+        "label": "create_comment",
+        "kind": 2,
+        "importPath": "backend.comments.views",
+        "description": "backend.comments.views",
+        "peekOfCode": "def create_comment(request, post_id):\n    post = get_object_or_404(Post, id=post_id, is_published=True)\n    if request.method != \"POST\":\n        return redirect(\"post_view\", id=post.id)\n    form = CommentForm(request.POST)\n    if form.is_valid():\n        comment = form.save(commit=False)\n        comment.post = post\n        comment.author = request.user\n        comment.save()",
+        "detail": "backend.comments.views",
+        "documentation": {}
+    },
+    {
+        "label": "load_comments",
+        "kind": 2,
+        "importPath": "backend.comments.views",
+        "description": "backend.comments.views",
+        "peekOfCode": "def load_comments(request, post_id):\n    post = get_object_or_404(Post, id=post_id, is_published=True)\n    page_obj = comment_page(post, request.GET.get(\"page\", 2))\n    if page_obj is None:\n        return HttpResponse(\"\", status=404)\n    return render(\n        request,\n        \"comments/comment_items.html\",\n        {\"comments_page\": page_obj, \"post\": post},\n    )",
+        "detail": "backend.comments.views",
+        "documentation": {}
+    },
+    {
+        "label": "edit_comment",
+        "kind": 2,
+        "importPath": "backend.comments.views",
+        "description": "backend.comments.views",
+        "peekOfCode": "def edit_comment(request, comment_id):\n    comment = get_object_or_404(Comment.objects.select_related(\"post\", \"author\"), id=comment_id)\n    if not can_manage_comment(request.user, comment):\n        return HttpResponse(\"Permission denied\", status=403)\n    if request.method == \"POST\":\n        form = CommentForm(request.POST, instance=comment)\n        if form.is_valid():\n            form.save()\n            return redirect(\"post_view\", id=comment.post_id)\n    else:",
+        "detail": "backend.comments.views",
+        "documentation": {}
+    },
+    {
+        "label": "delete_comment",
+        "kind": 2,
+        "importPath": "backend.comments.views",
+        "description": "backend.comments.views",
+        "peekOfCode": "def delete_comment(request, comment_id):\n    comment = get_object_or_404(Comment.objects.select_related(\"post\", \"author\"), id=comment_id)\n    if not can_manage_comment(request.user, comment):\n        return HttpResponse(\"Permission denied\", status=403)\n    if request.method == \"POST\":\n        post_id = comment.post_id\n        comment.delete()\n        return redirect(\"post_view\", id=post_id)\n    return render(request, \"comments/delete_comment.html\", {\"comment\": comment})\n@login_required",
+        "detail": "backend.comments.views",
+        "documentation": {}
+    },
+    {
+        "label": "my_comments",
+        "kind": 2,
+        "importPath": "backend.comments.views",
+        "description": "backend.comments.views",
+        "peekOfCode": "def my_comments(request):\n    comments = (\n        Comment.objects.filter(author=request.user)\n        .select_related(\"post\")\n        .order_by(\"-created_at\")\n    )\n    return render(request, \"comments/my_comments.html\", {\"comments\": comments})",
+        "detail": "backend.comments.views",
+        "documentation": {}
+    },
+    {
+        "label": "COMMENTS_PER_PAGE",
+        "kind": 5,
+        "importPath": "backend.comments.views",
+        "description": "backend.comments.views",
+        "peekOfCode": "COMMENTS_PER_PAGE = 5\ndef comments_for_post(post):\n    return post.comments.select_related(\"author\").order_by(\"-created_at\")\ndef comment_page(post, page_number):\n    paginator = Paginator(comments_for_post(post), COMMENTS_PER_PAGE)\n    try:\n        return paginator.page(page_number)\n    except (PageNotAnInteger, EmptyPage):\n        return None\ndef can_manage_comment(user, comment):",
+        "detail": "backend.comments.views",
+        "documentation": {}
+    },
+    {
         "label": "application",
         "kind": 5,
         "importPath": "backend.config.asgi",
@@ -1018,7 +1363,7 @@
         "kind": 5,
         "importPath": "backend.config.settings",
         "description": "backend.config.settings",
-        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'blog',\n]\nMIDDLEWARE = [",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'blog',\n    'comments'\n]",
         "detail": "backend.config.settings",
         "documentation": {}
     },
@@ -1153,7 +1498,7 @@
         "kind": 5,
         "importPath": "backend.config.urls",
         "description": "backend.config.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', home, name='home'),\n    path('admin/', admin.site.urls),\n    path('blogs/', include('blog.urls')),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('', home, name='home'),\n    path('admin/', admin.site.urls),\n    path('blogs/', include('blog.urls')),\n    path('blogs/', include('comments.urls')),\n]",
         "detail": "backend.config.urls",
         "documentation": {}
     },

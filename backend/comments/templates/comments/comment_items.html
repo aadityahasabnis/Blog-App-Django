@@ -1,0 +1,7 @@
+{% for comment in comments_page %}
+    {% include "comments/comment.html" %}
+{% empty %}
+    {% if not comments_page.has_previous %}
+        <p class="empty">No comments yet.</p>
+    {% endif %}
+{% endfor %}

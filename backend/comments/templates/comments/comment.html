@@ -1,0 +1,14 @@
+<article class="comment" id="comment-{{ comment.id }}">
+    <div class="meta">
+        <span>{{ comment.author.username }}</span>
+        <span>{{ comment.created_at|date:"M j, Y, g:i a" }}</span>
+        {% if comment.updated_at != comment.created_at %}<span>edited</span>{% endif %}
+    </div>
+    <div class="comment-body">{{ comment.content|linebreaks }}</div>
+    {% if user.is_authenticated and user.id == comment.author_id %}
+        <p class="comment-actions">
+            <a href="{% url 'edit_comment' comment.id %}">Edit</a>
+            <a class="danger" href="{% url 'delete_comment' comment.id %}">Delete</a>
+        </p>
+    {% endif %}
+</article>

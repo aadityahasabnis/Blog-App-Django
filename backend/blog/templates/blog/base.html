@@ -74,6 +74,17 @@
         .confirmation { max-width: 650px; margin: 60px auto; border-left: 4px solid var(--accent); padding: 12px 0 12px 28px; }
         .confirmation h1 { margin-bottom: 14px; }
         .danger { color: var(--accent-dark); }
+        .comments { max-width: 760px; margin: 56px auto 0; }
+        .comments h2 { font-size: 1.6rem; margin: 8px 0 22px; }
+        .comment-form { border: 1px solid var(--line); border-radius: 7px; background: var(--surface); padding: 22px; margin-bottom: 28px; }
+        .comment-form textarea { min-height: 110px; }
+        .comment { border-top: 1px solid var(--line); padding: 18px 0; }
+        .comment-body { line-height: 1.65; margin-top: 8px; }
+        .comment-actions { display: flex; gap: 14px; margin: 10px 0 0; font-size: .88rem; }
+        .comment-actions a { text-decoration: none; color: var(--muted); }
+        .comment-actions a:hover { color: var(--accent-dark); }
+        .comment-preview { color: var(--muted); border-left: 3px solid var(--line); margin: 18px 0; padding-left: 16px; }
+        .load-more { margin-top: 18px; }
         @media (max-width: 780px) { .hero { grid-template-columns: 1fr; gap: 24px; } .post-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 520px) { .nav { width: min(100% - 28px, 1120px); } .page { width: min(100% - 28px, 1120px); padding-top: 38px; } .nav-links { gap: 10px; } .nav-links a:not(.button) { display: none; } .post-grid { grid-template-columns: 1fr; } }
     </style>
@@ -87,6 +98,7 @@
                 {% if user.is_authenticated %}
                     <span class="muted">Hi, {{ user.username }}</span>
                     <a href="{% url 'my_posts' %}">My posts</a>
+                    <a href="{% url 'my_comments' %}">My comments</a>
                     <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="button" type="submit">Log out</button></form>
                 {% else %}
                     <a href="{% url 'login' %}">Log in</a>

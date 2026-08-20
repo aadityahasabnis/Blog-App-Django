@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+{% block title %}Edit comment | Field Notes{% endblock %}
+{% block content %}
+<main class="page">
+    <section class="form-page">
+        <a class="muted" href="{% url 'post_view' comment.post_id %}">&larr; Back to story</a>
+        <p class="eyebrow">Your comment</p>
+        <h1>Edit your comment</h1>
+        <form class="post-form" method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}<ul class="errors">{{ form.non_field_errors }}</ul>{% endif %}
+            {% for field in form %}
+                <div class="field">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}<ul class="errors">{{ field.errors }}</ul>{% endif %}
+                </div>
+            {% endfor %}
+            <div class="form-actions">
+                <button class="button" type="submit">Save changes</button>
+                <a class="muted" href="{% url 'post_view' comment.post_id %}">Cancel</a>
+            </div>
+        </form>
+    </section>
+</main>
+{% endblock %}

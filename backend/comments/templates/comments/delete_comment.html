@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% block title %}Delete comment | Field Notes{% endblock %}
+{% block content %}
+<main class="page">
+    <section class="confirmation">
+        <p class="eyebrow danger">This cannot be undone</p>
+        <h1>Delete this comment?</h1>
+        <p class="muted">You are about to permanently delete your comment on “{{ comment.post.title }}”.</p>
+        <blockquote class="comment-preview">{{ comment.content|truncatewords:40 }}</blockquote>
+        <form class="form-actions" method="post">
+            {% csrf_token %}
+            <button class="button" type="submit">Delete permanently</button>
+            <a class="muted" href="{% url 'post_view' comment.post_id %}">Cancel</a>
+        </form>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "blog/base.html" %}
+{% block title %}My comments | Field Notes{% endblock %}
+{% block content %}
+<main class="page">
+    <section class="hero">
+        <div class="hero-copy">
+            <div class="eyebrow">Your replies</div>
+            <h1>My comments.</h1>
+            <p>See every comment you have left. Only you can edit or delete them.</p>
+        </div>
+        <a class="button" href="{% url 'post_list' %}">Browse stories</a>
+    </section>
+    <section class="post-grid">
+        {% for comment in comments %}
+            <article class="post-card">
+                <div>
+                    {% if comment.post.category %}<span class="category">{{ comment.post.category }}</span>{% endif %}
+                    <h2><a href="{% url 'post_view' comment.post_id %}#comment-{{ comment.id }}">{{ comment.post.title }}</a></h2>
+                    <p class="card-excerpt">{{ comment.content|truncatewords:30 }}</p>
+                </div>
+                <div>
+                    <div class="meta">
+                        <span>{{ comment.created_at|date:"M j, Y" }}</span>
+                        {% if comment.updated_at != comment.created_at %}<span>edited</span>{% endif %}
+                    </div>
+                    <p class="article-actions">
+                        <a href="{% url 'edit_comment' comment.id %}">Edit</a>
+                        <a class="danger" href="{% url 'delete_comment' comment.id %}">Delete</a>
+                    </p>
+                </div>
+            </article>
+        {% empty %}
+            <p class="empty">You have not written any comments yet.</p>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

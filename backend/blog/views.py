@@ -8,10 +8,12 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 import json
+from comments.forms import CommentForm
+from comments.views import comment_page
 from .forms import PostForm, SignUpForm
 from .models import Post
 
-
+# helper function
 def allPostData(post):
     return {
         "id": str(post.id),
@@ -25,9 +27,11 @@ def allPostData(post):
         "category": post.category,
         "is_published": post.is_published,
         "views": post.views,
+        "comment_count": getattr(post, "comment_count", post.comments.count()),
         "created_at": post.created_at,
     }
 
+# helper function
 def json_object(request):
     try:
         data = json.loads(request.body)
@@ -37,7 +41,7 @@ def json_object(request):
         return None, JsonResponse({"error": "Request body must be a JSON object"}, status=400)
     return data, None
 
-
+# helper function
 def can_manage_post(user, post):
     return (
         user.is_staff
@@ -45,9 +49,10 @@ def can_manage_post(user, post):
         or post.author_id == user.id
     )
 
+# GET /blogs/
 def post_list(request):
     search_query = request.GET.get("q", "").strip()
-    posts = Post.objects.filter(is_published=True).select_related("author")
+    posts = Post.objects.filter(is_published=True).select_related("author").with_comment_count()
     if search_query:
         posts = posts.filter(
             Q(title__icontains=search_query)
@@ -64,12 +69,13 @@ def post_list(request):
         {"page_obj": page_obj, "search_query": search_query},
     )
 
-
+# /blogs/mine/
 @login_required
 def my_posts(request):
-    posts = Post.objects.filter(author=request.user).order_by("-created_at")
+    posts = Post.objects.filter(author=request.user).with_comment_count().order_by("-created_at")
     return render(request, "blog/my_posts.html", {"posts": posts})
 
+# /blogs/create/
 @login_required
 def post_create(request):
     if request.method == "POST":
@@ -84,7 +90,7 @@ def post_create(request):
 
     return render(request, "blog/post_form.html", {"form": form})
 
-
+# blog create API endpoint
 @csrf_exempt
 def post_create_api(request):
     if not request.user.is_authenticated:
@@ -114,11 +120,11 @@ def post_create_api(request):
 
     return JsonResponse(allPostData(post), status=201)
 
-
+# /blogs/<uuid:id>/
 @csrf_exempt
 def post_detail(request, id):
     try:
-        post = Post.objects.select_related("author").get(id=id)
+        post = Post.objects.select_related("author").with_comment_count().get(id=id)
     except Post.DoesNotExist:
         return JsonResponse({'error': 'Post not found'}, status=404)
 
@@ -126,10 +132,20 @@ def post_detail(request, id):
         if not post.is_published:
             return JsonResponse({'error': 'Post not found'}, status=404)
         Post.objects.filter(id=post.id).update(views=F("views") + 1)
-        post.refresh_from_db()
+        post.views += 1
         if request.headers.get("Accept") == "application/json":
             return JsonResponse(allPostData(post))
-        return render(request, "blog/post_detail.html", {"post": post})
+        comments_page = comment_page(post, 1)
+        return render(
+            request,
+            "blog/post_detail.html",
+            {
+                "post": post,
+                "comment_form": CommentForm(),
+                "comments_page": comments_page,
+                "comment_count": post.comment_count,
+            },
+        )
 
     if request.method == "DELETE":
         if not request.user.is_authenticated:
@@ -187,7 +203,7 @@ def post_detail(request, id):
 
     return JsonResponse(allPostData(post), status=200)
 
-
+@login_required
 def post_edit(request, id):
     if not request.user.is_authenticated:
         return redirect(f"/blogs/login/?next=/blogs/{id}/edit/")
@@ -204,7 +220,7 @@ def post_edit(request, id):
 
     return render(request, "blog/post_form.html", {"form": form, "post": post})
 
-
+@login_required
 def post_delete(request, id):
     if not request.user.is_authenticated:
         return redirect(f"/blogs/login/?next=/blogs/{id}/delete/")

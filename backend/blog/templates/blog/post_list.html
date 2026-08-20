@@ -28,6 +28,7 @@
                         <span>{{ post.author.username }}</span>
                         <span>{{ post.created_at|date:"M j, Y" }}</span>
                         <span>{{ post.views }} views</span>
+                        <span>{{ post.comment_count }} comment{{ post.comment_count|pluralize }}</span>
                     </div>
                 </article>
             {% empty %}

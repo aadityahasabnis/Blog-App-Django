@@ -1,10 +1,17 @@
 from django.db import models
+from django.db.models import Count
 from django.conf import settings
 import uuid
-# Create your models here.
+
+
+class PostQuerySet(models.QuerySet):
+    def with_comment_count(self):
+        return self.annotate(comment_count=Count("comments"))
 
 
 class Post(models.Model):
+    objects = PostQuerySet.as_manager()
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
     author = models.ForeignKey(
