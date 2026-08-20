@@ -2,9 +2,13 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, JsonResponse
 from django.core.paginator import Paginator
 from django.db.models import F, Q
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .forms import PostForm
+from .forms import PostForm, SignUpForm
 from .models import Author, Post
 
 
@@ -40,6 +44,21 @@ def isAndGetAuthor(author_id):
     except (Author.DoesNotExist, ValueError, TypeError):
         return None, JsonResponse({"error": "Author not found"}, status=404)
 
+
+def current_author(user):
+    try:
+        return Author.objects.get(email__iexact=user.email)
+    except Author.DoesNotExist:
+        return None
+
+
+def can_manage_post(user, post):
+    return (
+        user.is_staff
+        or user.is_superuser
+        or post.author.email.casefold() == user.email.casefold()
+    )
+
 def post_list(request):
     search_query = request.GET.get("q", "").strip()
     posts = Post.objects.filter(is_published=True).select_related("author")
@@ -59,12 +78,19 @@ def post_list(request):
         {"page_obj": page_obj, "search_query": search_query},
     )
 
+@login_required
 def post_create(request):
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save()
-            return render(request, "blog/post_created.html", {"post": post}, status=201)
+            author = current_author(request.user)
+            if author is None:
+                form.add_error(None, "Your account is not linked to an author profile.")
+            else:
+                post = form.save(commit=False)
+                post.author = author
+                post.save()
+                return render(request, "blog/post_created.html", {"post": post}, status=201)
     else:
         form = PostForm()
 
@@ -73,6 +99,9 @@ def post_create(request):
 
 @csrf_exempt
 def post_create_api(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({"error": "Authentication required"}, status=401)
+
     if request.method != "POST":
         return JsonResponse({"error": "Only POST requests are allowed"}, status=405)
 
@@ -80,16 +109,16 @@ def post_create_api(request):
     if error:
         return error
 
-    missing_fields = [field for field in ("title", "content", "author_id") if not data.get(field)]
+    missing_fields = [field for field in ("title", "content") if not data.get(field)]
     if missing_fields:
         return JsonResponse(
             {"error": "Missing required fields", "fields": missing_fields},
             status=400,
         )
 
-    author, error = isAndGetAuthor(data["author_id"])
-    if error:
-        return error
+    author = current_author(request.user)
+    if author is None:
+        return JsonResponse({"error": "Author profile not found"}, status=400)
 
     post = Post.objects.create(
         title=data["title"],
@@ -119,6 +148,10 @@ def post_detail(request, id):
         return render(request, "blog/post_detail.html", {"post": post})
 
     if request.method == "DELETE":
+        if not request.user.is_authenticated:
+            return JsonResponse({"error": "Authentication required"}, status=401)
+        if not can_manage_post(request.user, post):
+            return JsonResponse({"error": "Permission denied"}, status=403)
         post.delete()
         return HttpResponse(status=204)
 
@@ -127,6 +160,11 @@ def post_detail(request, id):
             {"error": "Method not allowed", "allowed_methods": ["GET", "PUT", "PATCH", "DELETE"]},
             status=405,
         )
+
+    if not request.user.is_authenticated:
+        return JsonResponse({"error": "Authentication required"}, status=401)
+    if not can_manage_post(request.user, post):
+        return JsonResponse({"error": "Permission denied"}, status=403)
 
     data, error = json_object(request)
     if error:
@@ -178,7 +216,11 @@ def post_detail(request, id):
 
 
 def post_edit(request, id):
+    if not request.user.is_authenticated:
+        return redirect(f"/blogs/login/?next=/blogs/{id}/edit/")
     post = get_object_or_404(Post.objects.select_related("author"), id=id)
+    if not can_manage_post(request.user, post):
+        return HttpResponse("Permission denied", status=403)
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
@@ -191,7 +233,11 @@ def post_edit(request, id):
 
 
 def post_delete(request, id):
+    if not request.user.is_authenticated:
+        return redirect(f"/blogs/login/?next=/blogs/{id}/delete/")
     post = get_object_or_404(Post, id=id)
+    if not can_manage_post(request.user, post):
+        return HttpResponse("Permission denied", status=403)
     if request.method == "POST":
         post.delete()
         return redirect("post_list")
@@ -200,6 +246,48 @@ def post_delete(request, id):
 
 def home(request):
     return render(request, "blog/home.html")
+
+
+def signup_view(request):
+    if request.user.is_authenticated:
+        return redirect("post_list")
+
+    form = SignUpForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        with transaction.atomic():
+            user = form.save()
+            Author.objects.create(name=user.username, email=user.email)
+        login(request, user)
+        return redirect("post_list")
+
+    return render(
+        request,
+        "blog/auth_form.html",
+        {"form": form, "title": "Create an account", "action": "Sign up"},
+    )
+
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect("post_list")
+
+    form = AuthenticationForm(request, data=request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        login(request, form.get_user())
+        return redirect(request.GET.get("next") or "post_list")
+
+    return render(
+        request,
+        "blog/auth_form.html",
+        {"form": form, "title": "Log in", "action": "Log in"},
+    )
+
+
+@login_required
+def logout_view(request):
+    if request.method == "POST":
+        logout(request)
+    return redirect("home")
 
 def inspect_request(request):
     # request.session["favorite_color"] = "blue"

@@ -1,6 +1,7 @@
 import json
 
 from django.test import TestCase
+from django.contrib.auth.models import User
 
 from .models import Author, Post
 from .forms import PostForm
@@ -9,6 +10,8 @@ from .forms import PostForm
 class PostCreateTests(TestCase):
 	def setUp(self):
 		self.author = Author.objects.create(name="Aadi", email="aadi@example.com")
+		self.user = User.objects.create_user("aadi", "aadi@example.com", "password123")
+		self.client.force_login(self.user)
 
 	def test_creates_post(self):
 		response = self.client.post(
@@ -61,10 +64,37 @@ class PostCreateTests(TestCase):
 		self.assertFalse(Post.objects.exists())
 		self.assertIn("This field is required.", response.content.decode())
 
+	def test_anonymous_user_cannot_open_create_form(self):
+		self.client.logout()
+
+		response = self.client.get("/blogs/create/")
+
+		self.assertEqual(response.status_code, 302)
+		self.assertIn("/blogs/login/", response["Location"])
+
+	def test_signup_creates_user_and_author(self):
+		self.client.logout()
+
+		response = self.client.post(
+			"/blogs/signup/",
+			data={
+				"username": "newwriter",
+				"email": "writer@example.com",
+				"password1": "A-secure-password-123",
+				"password2": "A-secure-password-123",
+			},
+		)
+
+		self.assertEqual(response.status_code, 302)
+		self.assertTrue(User.objects.filter(username="newwriter").exists())
+		self.assertTrue(Author.objects.filter(email="writer@example.com").exists())
+
 
 class PostDetailMutationTests(TestCase):
 	def setUp(self):
 		self.author = Author.objects.create(name="Aadi", email="aadi@example.com")
+		self.user = User.objects.create_user("aadi", "aadi@example.com", "password123")
+		self.client.force_login(self.user)
 		self.other_author = Author.objects.create(name="Sam", email="sam@example.com")
 		self.post = Post.objects.create(
 			title="Original title",
@@ -133,16 +163,15 @@ class PostDetailMutationTests(TestCase):
 	def test_rejects_unknown_author(self):
 		response = self.client.post(
 			"/blogs/api/create/",
-			data=json.dumps(
-				{"title": "A new post", "content": "Post content", "author_id": 999}
-			),
+			data=json.dumps({"title": "A new post", "content": "Post content"}),
 			content_type="application/json",
 		)
 
-		self.assertEqual(response.status_code, 404)
+		self.assertEqual(response.status_code, 201)
 
 	def test_can_create_without_csrf_token(self):
 		client = self.client_class(enforce_csrf_checks=True)
+		client.force_login(self.user)
 		response = client.post(
 			"/blogs/api/create/",
 			data=json.dumps(
@@ -161,6 +190,8 @@ class PostDetailMutationTests(TestCase):
 class BlogPageTests(TestCase):
 	def setUp(self):
 		self.author = Author.objects.create(name="Aadi", email="aadi@example.com")
+		self.user = User.objects.create_user("aadi", "aadi@example.com", "password123")
+		self.client.force_login(self.user)
 		self.post = Post.objects.create(
 			title="Published post",
 			content="Published content",
