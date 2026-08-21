@@ -85,7 +85,17 @@
         .comment-actions a:hover { color: var(--accent-dark); }
         .comment-preview { color: var(--muted); border-left: 3px solid var(--line); margin: 18px 0; padding-left: 16px; }
         .load-more { margin-top: 18px; }
+        .profile-header { display: grid; grid-template-columns: 1fr minmax(280px, 350px); gap: 26px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); padding: clamp(20px, 4vw, 34px); margin-bottom: 34px; }
+        .profile-identity { display: flex; align-items: flex-start; gap: 16px; }
+        .avatar { width: 86px; height: 86px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); background: #fff; }
+        .avatar-fallback { display: inline-flex; align-items: center; justify-content: center; background: var(--sage); color: #405641; font-family: "Space Grotesk", sans-serif; font-size: 1.8rem; font-weight: 700; }
+        .profile-actions { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+        .social-links { display: flex; flex-wrap: wrap; gap: 8px 12px; }
+        .social-links a { color: var(--muted); text-decoration: none; }
+        .social-links a:hover { color: var(--accent-dark); }
+        .meta a { color: inherit; }
         @media (max-width: 780px) { .hero { grid-template-columns: 1fr; gap: 24px; } .post-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 780px) { .profile-header { grid-template-columns: 1fr; } }
         @media (max-width: 520px) { .nav { width: min(100% - 28px, 1120px); } .page { width: min(100% - 28px, 1120px); padding-top: 38px; } .nav-links { gap: 10px; } .nav-links a:not(.button) { display: none; } .post-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -97,6 +107,7 @@
                 <a href="{% url 'post_list' %}">Stories</a>
                 {% if user.is_authenticated %}
                     <span class="muted">Hi, {{ user.username }}</span>
+                    <a href="{% url 'author_page' user.username %}">My profile</a>
                     <a href="{% url 'my_posts' %}">My posts</a>
                     <a href="{% url 'my_comments' %}">My comments</a>
                     <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="button" type="submit">Log out</button></form>

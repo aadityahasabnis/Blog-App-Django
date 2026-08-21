@@ -1,0 +1,72 @@
+{% extends "blog/base.html" %}
+{% block title %}{{ author.username }} | Field Notes{% endblock %}
+{% block content %}
+<main class="page">
+    <section class="profile-header">
+        <div class="profile-identity">
+            {% if profile.avatar %}
+                <img class="avatar" src="{{ profile.avatar.url }}" alt="{{ author.username }} avatar">
+            {% else %}
+                <div class="avatar avatar-fallback">{{ author.username|first|upper }}</div>
+            {% endif %}
+            <div>
+                <p class="eyebrow">Author page</p>
+                <h1>{{ author.username }}</h1>
+                {% if profile.bio %}
+                    <p class="muted">{{ profile.bio|linebreaksbr }}</p>
+                {% else %}
+                    <p class="muted">No bio added yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <div class="meta">
+                <span>{{ follower_count }} follower{{ follower_count|pluralize }}</span>
+                <span>{{ following_count }} following</span>
+                <span>{{ posts|length }} post{{ posts|length|pluralize }}</span>
+            </div>
+
+            {% if user.is_authenticated and user.id == author.id %}
+                <a class="button" href="{% url 'profile_edit' %}">Edit profile</a>
+            {% elif user.is_authenticated %}
+                <form method="post" action="{% url 'follow_toggle' author.username %}">
+                    {% csrf_token %}
+                    <button class="button" type="submit">{% if is_following %}Unfollow{% else %}Follow{% endif %}</button>
+                </form>
+            {% else %}
+                <a class="button" href="{% url 'login' %}?next={% url 'author_page' author.username %}">Log in to follow</a>
+            {% endif %}
+
+            <div class="social-links">
+                {% if profile.website_url %}<a href="{{ profile.website_url }}" target="_blank" rel="noopener noreferrer">Website</a>{% endif %}
+                {% if profile.twitter_url %}<a href="{{ profile.twitter_url }}" target="_blank" rel="noopener noreferrer">Twitter</a>{% endif %}
+                {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>{% endif %}
+                {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>{% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <p class="eyebrow">Published stories</p>
+        <div class="post-grid">
+            {% for post in posts %}
+                <article class="post-card">
+                    <div>
+                        {% if post.category %}<span class="category">{{ post.category }}</span>{% endif %}
+                        <h2><a href="{% url 'post_view' post.id %}">{{ post.title }}</a></h2>
+                        <p class="card-excerpt">{{ post.content|truncatewords:30 }}</p>
+                    </div>
+                    <div class="meta">
+                        <span>{{ post.created_at|date:"M j, Y" }}</span>
+                        <span>{{ post.views }} views</span>
+                        <span>{{ post.comment_count }} comment{{ post.comment_count|pluralize }}</span>
+                    </div>
+                </article>
+            {% empty %}
+                <p class="empty">This author has not published any posts yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "blog/base.html" %}
+{% block title %}Edit profile | Field Notes{% endblock %}
+{% block content %}
+<main class="page">
+    <section class="form-page">
+        <p class="eyebrow">Public identity</p>
+        <h1>Edit profile.</h1>
+
+        <form class="post-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.non_field_errors %}<ul class="errors">{{ form.non_field_errors }}</ul>{% endif %}
+
+            <div class="field">
+                {{ form.bio.label_tag }}
+                {{ form.bio }}
+                {% if form.bio.errors %}<ul class="errors">{{ form.bio.errors }}</ul>{% endif %}
+            </div>
+
+            <div class="field">
+                {{ form.avatar.label_tag }}
+                {% if profile.avatar %}
+                    <p class="muted">Current: <a href="{{ profile.avatar.url }}" target="_blank" rel="noopener noreferrer">{{ profile.avatar.name }}</a></p>
+                {% endif %}
+                {{ form.avatar }}
+                {% if form.avatar.errors %}<ul class="errors">{{ form.avatar.errors }}</ul>{% endif %}
+            </div>
+
+            <div class="field">
+                {{ form.website_url.label_tag }}
+                {{ form.website_url }}
+                {% if form.website_url.errors %}<ul class="errors">{{ form.website_url.errors }}</ul>{% endif %}
+            </div>
+
+            <div class="field">
+                {{ form.twitter_url.label_tag }}
+                {{ form.twitter_url }}
+                {% if form.twitter_url.errors %}<ul class="errors">{{ form.twitter_url.errors }}</ul>{% endif %}
+            </div>
+
+            <div class="field">
+                {{ form.github_url.label_tag }}
+                {{ form.github_url }}
+                {% if form.github_url.errors %}<ul class="errors">{{ form.github_url.errors }}</ul>{% endif %}
+            </div>
+
+            <div class="field">
+                {{ form.linkedin_url.label_tag }}
+                {{ form.linkedin_url }}
+                {% if form.linkedin_url.errors %}<ul class="errors">{{ form.linkedin_url.errors }}</ul>{% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button class="button" type="submit">Save profile</button>
+                <a href="{% url 'author_page' request.user.username %}">Cancel</a>
+            </div>
+        </form>
+    </section>
+</main>
+{% endblock %}

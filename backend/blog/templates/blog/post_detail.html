@@ -7,7 +7,7 @@
         <p class="eyebrow">{% if post.category %}{{ post.category }}{% else %}Field Notes{% endif %}</p>
         <h1>{{ post.title }}</h1>
         <div class="meta">
-            <span>By {{ post.author.username }}</span>
+            <span>By <a href="{% url 'author_page' post.author.username %}">{{ post.author.username }}</a></span>
             <span>{{ post.created_at|date:"F j, Y" }}</span>
             <span>{{ post.views }} views</span>
             <span>{{ post.comment_count }} comment{{ post.comment_count|pluralize }}</span>

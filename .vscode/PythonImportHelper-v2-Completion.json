@@ -142,6 +142,38 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
         "label": "settings",
         "importPath": "django.conf",
         "description": "django.conf",
@@ -163,6 +195,30 @@
         "description": "django.conf",
         "isExtraImport": true,
         "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
         "documentation": {}
     },
     {
@@ -203,6 +259,22 @@
         "description": "django.apps",
         "isExtraImport": true,
         "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
         "documentation": {}
     },
     {
@@ -286,12 +358,36 @@
         "documentation": {}
     },
     {
+        "label": "F",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Q",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "json",
         "description": "json",
         "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
         "documentation": {}
     },
     {
@@ -340,6 +436,38 @@
         "description": "django.urls",
         "isExtraImport": true,
         "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "get_object_or_404",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
         "documentation": {}
     },
     {
@@ -415,6 +543,14 @@
         "documentation": {}
     },
     {
+        "label": "HttpResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
         "label": "Paginator",
         "importPath": "django.core.paginator",
         "description": "django.core.paginator",
@@ -460,6 +596,30 @@
         "description": "django.contrib.auth",
         "isExtraImport": true,
         "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_model",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_model",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
         "documentation": {}
     },
     {
@@ -519,6 +679,14 @@
         "documentation": {}
     },
     {
+        "label": "Post",
+        "importPath": "blog.models",
+        "description": "blog.models",
+        "isExtraImport": true,
+        "detail": "blog.models",
+        "documentation": {}
+    },
+    {
         "label": "get_asgi_application",
         "importPath": "django.core.asgi",
         "description": "django.core.asgi",
@@ -532,6 +700,14 @@
         "description": "pathlib",
         "isExtraImport": true,
         "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "static",
+        "importPath": "django.conf.urls.static",
+        "description": "django.conf.urls.static",
+        "isExtraImport": true,
+        "detail": "django.conf.urls.static",
         "documentation": {}
     },
     {
@@ -564,6 +740,22 @@
         "description": "django.core.wsgi",
         "isExtraImport": true,
         "detail": "django.core.wsgi",
+        "documentation": {}
+    },
+    {
+        "label": "post_save",
+        "importPath": "django.db.models.signals",
+        "description": "django.db.models.signals",
+        "isExtraImport": true,
+        "detail": "django.db.models.signals",
+        "documentation": {}
+    },
+    {
+        "label": "receiver",
+        "importPath": "django.dispatch",
+        "description": "django.dispatch",
+        "isExtraImport": true,
+        "detail": "django.dispatch",
         "documentation": {}
     },
     {
@@ -1363,7 +1555,7 @@
         "kind": 5,
         "importPath": "backend.config.settings",
         "description": "backend.config.settings",
-        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'blog',\n    'comments'\n]",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'blog',\n    'comments',\n    'profiles',",
         "detail": "backend.config.settings",
         "documentation": {}
     },
@@ -1426,7 +1618,7 @@
         "kind": 5,
         "importPath": "backend.config.settings",
         "description": "backend.config.settings",
-        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/6.0/howto/static-files/\nSTATIC_URL = 'static/'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'\nLOGOUT_REDIRECT_URL = '/'",
+        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/6.0/howto/static-files/\nSTATIC_URL = 'static/'\nMEDIA_URL = '/media/'\nMEDIA_ROOT = BASE_DIR / 'media'\nLOGIN_URL = '/blogs/login/'",
         "detail": "backend.config.settings",
         "documentation": {}
     },
@@ -1435,7 +1627,7 @@
         "kind": 5,
         "importPath": "backend.config.settings",
         "description": "backend.config.settings",
-        "peekOfCode": "TIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/6.0/howto/static-files/\nSTATIC_URL = 'static/'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'\nLOGOUT_REDIRECT_URL = '/'",
+        "peekOfCode": "TIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/6.0/howto/static-files/\nSTATIC_URL = 'static/'\nMEDIA_URL = '/media/'\nMEDIA_ROOT = BASE_DIR / 'media'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'",
         "detail": "backend.config.settings",
         "documentation": {}
     },
@@ -1444,7 +1636,7 @@
         "kind": 5,
         "importPath": "backend.config.settings",
         "description": "backend.config.settings",
-        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/6.0/howto/static-files/\nSTATIC_URL = 'static/'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'\nLOGOUT_REDIRECT_URL = '/'",
+        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/6.0/howto/static-files/\nSTATIC_URL = 'static/'\nMEDIA_URL = '/media/'\nMEDIA_ROOT = BASE_DIR / 'media'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'\nLOGOUT_REDIRECT_URL = '/'",
         "detail": "backend.config.settings",
         "documentation": {}
     },
@@ -1453,7 +1645,7 @@
         "kind": 5,
         "importPath": "backend.config.settings",
         "description": "backend.config.settings",
-        "peekOfCode": "USE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/6.0/howto/static-files/\nSTATIC_URL = 'static/'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'\nLOGOUT_REDIRECT_URL = '/'",
+        "peekOfCode": "USE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/6.0/howto/static-files/\nSTATIC_URL = 'static/'\nMEDIA_URL = '/media/'\nMEDIA_ROOT = BASE_DIR / 'media'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'\nLOGOUT_REDIRECT_URL = '/'",
         "detail": "backend.config.settings",
         "documentation": {}
     },
@@ -1462,7 +1654,25 @@
         "kind": 5,
         "importPath": "backend.config.settings",
         "description": "backend.config.settings",
-        "peekOfCode": "STATIC_URL = 'static/'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'\nLOGOUT_REDIRECT_URL = '/'",
+        "peekOfCode": "STATIC_URL = 'static/'\nMEDIA_URL = '/media/'\nMEDIA_ROOT = BASE_DIR / 'media'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'\nLOGOUT_REDIRECT_URL = '/'",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "MEDIA_URL",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = BASE_DIR / 'media'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'\nLOGOUT_REDIRECT_URL = '/'",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "MEDIA_ROOT",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "MEDIA_ROOT = BASE_DIR / 'media'\nLOGIN_URL = '/blogs/login/'\nLOGIN_REDIRECT_URL = '/blogs/'\nLOGOUT_REDIRECT_URL = '/'",
         "detail": "backend.config.settings",
         "documentation": {}
     },
@@ -1498,7 +1708,7 @@
         "kind": 5,
         "importPath": "backend.config.urls",
         "description": "backend.config.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', home, name='home'),\n    path('admin/', admin.site.urls),\n    path('blogs/', include('blog.urls')),\n    path('blogs/', include('comments.urls')),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('', home, name='home'),\n    path('admin/', admin.site.urls),\n    path('blogs/', include('blog.urls')),\n    path('blogs/', include('comments.urls')),\n    path('blogs/', include('profiles.urls')),\n]\nif settings.DEBUG:\n    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)",
         "detail": "backend.config.urls",
         "documentation": {}
     },
@@ -1509,6 +1719,384 @@
         "description": "backend.config.wsgi",
         "peekOfCode": "application = get_wsgi_application()",
         "detail": "backend.config.wsgi",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.profiles.migrations.0001_initial",
+        "description": "backend.profiles.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Profile',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),",
+        "detail": "backend.profiles.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "ProfileAdmin",
+        "kind": 6,
+        "importPath": "backend.profiles.admin",
+        "description": "backend.profiles.admin",
+        "peekOfCode": "class ProfileAdmin(admin.ModelAdmin):\n\tlist_display = (\"user\", \"updated_at\")\n\tsearch_fields = (\"user__username\", \"user__email\", \"bio\")\n@admin.register(Follow)\nclass FollowAdmin(admin.ModelAdmin):\n\tlist_display = (\"follower\", \"following\", \"created_at\")\n\tsearch_fields = (\"follower__username\", \"following__username\")",
+        "detail": "backend.profiles.admin",
+        "documentation": {}
+    },
+    {
+        "label": "FollowAdmin",
+        "kind": 6,
+        "importPath": "backend.profiles.admin",
+        "description": "backend.profiles.admin",
+        "peekOfCode": "class FollowAdmin(admin.ModelAdmin):\n\tlist_display = (\"follower\", \"following\", \"created_at\")\n\tsearch_fields = (\"follower__username\", \"following__username\")",
+        "detail": "backend.profiles.admin",
+        "documentation": {}
+    },
+    {
+        "label": "\tlist_display",
+        "kind": 5,
+        "importPath": "backend.profiles.admin",
+        "description": "backend.profiles.admin",
+        "peekOfCode": "\tlist_display = (\"user\", \"updated_at\")\n\tsearch_fields = (\"user__username\", \"user__email\", \"bio\")\n@admin.register(Follow)\nclass FollowAdmin(admin.ModelAdmin):\n\tlist_display = (\"follower\", \"following\", \"created_at\")\n\tsearch_fields = (\"follower__username\", \"following__username\")",
+        "detail": "backend.profiles.admin",
+        "documentation": {}
+    },
+    {
+        "label": "\tsearch_fields",
+        "kind": 5,
+        "importPath": "backend.profiles.admin",
+        "description": "backend.profiles.admin",
+        "peekOfCode": "\tsearch_fields = (\"user__username\", \"user__email\", \"bio\")\n@admin.register(Follow)\nclass FollowAdmin(admin.ModelAdmin):\n\tlist_display = (\"follower\", \"following\", \"created_at\")\n\tsearch_fields = (\"follower__username\", \"following__username\")",
+        "detail": "backend.profiles.admin",
+        "documentation": {}
+    },
+    {
+        "label": "\tlist_display",
+        "kind": 5,
+        "importPath": "backend.profiles.admin",
+        "description": "backend.profiles.admin",
+        "peekOfCode": "\tlist_display = (\"follower\", \"following\", \"created_at\")\n\tsearch_fields = (\"follower__username\", \"following__username\")",
+        "detail": "backend.profiles.admin",
+        "documentation": {}
+    },
+    {
+        "label": "\tsearch_fields",
+        "kind": 5,
+        "importPath": "backend.profiles.admin",
+        "description": "backend.profiles.admin",
+        "peekOfCode": "\tsearch_fields = (\"follower__username\", \"following__username\")",
+        "detail": "backend.profiles.admin",
+        "documentation": {}
+    },
+    {
+        "label": "ProfilesConfig",
+        "kind": 6,
+        "importPath": "backend.profiles.apps",
+        "description": "backend.profiles.apps",
+        "peekOfCode": "class ProfilesConfig(AppConfig):\n    name = 'profiles'\n    def ready(self):\n        from . import signals  # noqa: F401",
+        "detail": "backend.profiles.apps",
+        "documentation": {}
+    },
+    {
+        "label": "ProfileForm",
+        "kind": 6,
+        "importPath": "backend.profiles.forms",
+        "description": "backend.profiles.forms",
+        "peekOfCode": "class ProfileForm(forms.ModelForm):\n    class Meta:\n        model = Profile\n        fields = [\n            \"bio\",\n            \"avatar\",\n            \"website_url\",\n            \"twitter_url\",\n            \"github_url\",\n            \"linkedin_url\",",
+        "detail": "backend.profiles.forms",
+        "documentation": {}
+    },
+    {
+        "label": "Profile",
+        "kind": 6,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "class Profile(models.Model):\n\tuser = models.OneToOneField(\n\t\tsettings.AUTH_USER_MODEL,\n\t\ton_delete=models.CASCADE,\n\t\trelated_name=\"profile\",\n\t)\n\tbio = models.TextField(blank=True)\n\tavatar = models.FileField(upload_to=\"avatars/\", blank=True, null=True)\n\twebsite_url = models.URLField(blank=True)\n\ttwitter_url = models.URLField(blank=True)",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "Follow",
+        "kind": 6,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "class Follow(models.Model):\n\tfollower = models.ForeignKey(\n\t\tsettings.AUTH_USER_MODEL,\n\t\ton_delete=models.CASCADE,\n\t\trelated_name=\"following\",\n\t)\n\tfollowing = models.ForeignKey(\n\t\tsettings.AUTH_USER_MODEL,\n\t\ton_delete=models.CASCADE,\n\t\trelated_name=\"followers\",",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\tuser",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\tuser = models.OneToOneField(\n\t\tsettings.AUTH_USER_MODEL,\n\t\ton_delete=models.CASCADE,\n\t\trelated_name=\"profile\",\n\t)\n\tbio = models.TextField(blank=True)\n\tavatar = models.FileField(upload_to=\"avatars/\", blank=True, null=True)\n\twebsite_url = models.URLField(blank=True)\n\ttwitter_url = models.URLField(blank=True)\n\tgithub_url = models.URLField(blank=True)",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\tbio",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\tbio = models.TextField(blank=True)\n\tavatar = models.FileField(upload_to=\"avatars/\", blank=True, null=True)\n\twebsite_url = models.URLField(blank=True)\n\ttwitter_url = models.URLField(blank=True)\n\tgithub_url = models.URLField(blank=True)\n\tlinkedin_url = models.URLField(blank=True)\n\tcreated_at = models.DateTimeField(auto_now_add=True)\n\tupdated_at = models.DateTimeField(auto_now=True)\n\tdef __str__(self):\n\t\treturn f\"Profile({self.user.username})\"",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\tavatar",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\tavatar = models.FileField(upload_to=\"avatars/\", blank=True, null=True)\n\twebsite_url = models.URLField(blank=True)\n\ttwitter_url = models.URLField(blank=True)\n\tgithub_url = models.URLField(blank=True)\n\tlinkedin_url = models.URLField(blank=True)\n\tcreated_at = models.DateTimeField(auto_now_add=True)\n\tupdated_at = models.DateTimeField(auto_now=True)\n\tdef __str__(self):\n\t\treturn f\"Profile({self.user.username})\"\n\tdef follower_count(self):",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\twebsite_url",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\twebsite_url = models.URLField(blank=True)\n\ttwitter_url = models.URLField(blank=True)\n\tgithub_url = models.URLField(blank=True)\n\tlinkedin_url = models.URLField(blank=True)\n\tcreated_at = models.DateTimeField(auto_now_add=True)\n\tupdated_at = models.DateTimeField(auto_now=True)\n\tdef __str__(self):\n\t\treturn f\"Profile({self.user.username})\"\n\tdef follower_count(self):\n\t\treturn self.user.followers.count()",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\ttwitter_url",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\ttwitter_url = models.URLField(blank=True)\n\tgithub_url = models.URLField(blank=True)\n\tlinkedin_url = models.URLField(blank=True)\n\tcreated_at = models.DateTimeField(auto_now_add=True)\n\tupdated_at = models.DateTimeField(auto_now=True)\n\tdef __str__(self):\n\t\treturn f\"Profile({self.user.username})\"\n\tdef follower_count(self):\n\t\treturn self.user.followers.count()\n\tdef following_count(self):",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\tgithub_url",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\tgithub_url = models.URLField(blank=True)\n\tlinkedin_url = models.URLField(blank=True)\n\tcreated_at = models.DateTimeField(auto_now_add=True)\n\tupdated_at = models.DateTimeField(auto_now=True)\n\tdef __str__(self):\n\t\treturn f\"Profile({self.user.username})\"\n\tdef follower_count(self):\n\t\treturn self.user.followers.count()\n\tdef following_count(self):\n\t\treturn self.user.following.count()",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\tlinkedin_url",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\tlinkedin_url = models.URLField(blank=True)\n\tcreated_at = models.DateTimeField(auto_now_add=True)\n\tupdated_at = models.DateTimeField(auto_now=True)\n\tdef __str__(self):\n\t\treturn f\"Profile({self.user.username})\"\n\tdef follower_count(self):\n\t\treturn self.user.followers.count()\n\tdef following_count(self):\n\t\treturn self.user.following.count()\nclass Follow(models.Model):",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\tcreated_at",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\tcreated_at = models.DateTimeField(auto_now_add=True)\n\tupdated_at = models.DateTimeField(auto_now=True)\n\tdef __str__(self):\n\t\treturn f\"Profile({self.user.username})\"\n\tdef follower_count(self):\n\t\treturn self.user.followers.count()\n\tdef following_count(self):\n\t\treturn self.user.following.count()\nclass Follow(models.Model):\n\tfollower = models.ForeignKey(",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\tupdated_at",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\tupdated_at = models.DateTimeField(auto_now=True)\n\tdef __str__(self):\n\t\treturn f\"Profile({self.user.username})\"\n\tdef follower_count(self):\n\t\treturn self.user.followers.count()\n\tdef following_count(self):\n\t\treturn self.user.following.count()\nclass Follow(models.Model):\n\tfollower = models.ForeignKey(\n\t\tsettings.AUTH_USER_MODEL,",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\tfollower",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\tfollower = models.ForeignKey(\n\t\tsettings.AUTH_USER_MODEL,\n\t\ton_delete=models.CASCADE,\n\t\trelated_name=\"following\",\n\t)\n\tfollowing = models.ForeignKey(\n\t\tsettings.AUTH_USER_MODEL,\n\t\ton_delete=models.CASCADE,\n\t\trelated_name=\"followers\",\n\t)",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\tfollowing",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\tfollowing = models.ForeignKey(\n\t\tsettings.AUTH_USER_MODEL,\n\t\ton_delete=models.CASCADE,\n\t\trelated_name=\"followers\",\n\t)\n\tcreated_at = models.DateTimeField(auto_now_add=True)\n\tclass Meta:\n\t\tordering = [\"-created_at\"]\n\t\tconstraints = [\n\t\t\tmodels.UniqueConstraint(",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\tcreated_at",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\tcreated_at = models.DateTimeField(auto_now_add=True)\n\tclass Meta:\n\t\tordering = [\"-created_at\"]\n\t\tconstraints = [\n\t\t\tmodels.UniqueConstraint(\n\t\t\t\tfields=[\"follower\", \"following\"],\n\t\t\t\tname=\"unique_follow_relationship\",\n\t\t\t),\n\t\t\tmodels.CheckConstraint(\n\t\t\t\tcondition=~Q(follower=F(\"following\")),",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tordering",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\t\tordering = [\"-created_at\"]\n\t\tconstraints = [\n\t\t\tmodels.UniqueConstraint(\n\t\t\t\tfields=[\"follower\", \"following\"],\n\t\t\t\tname=\"unique_follow_relationship\",\n\t\t\t),\n\t\t\tmodels.CheckConstraint(\n\t\t\t\tcondition=~Q(follower=F(\"following\")),\n\t\t\t\tname=\"prevent_self_follow\",\n\t\t\t),",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tconstraints",
+        "kind": 5,
+        "importPath": "backend.profiles.models",
+        "description": "backend.profiles.models",
+        "peekOfCode": "\t\tconstraints = [\n\t\t\tmodels.UniqueConstraint(\n\t\t\t\tfields=[\"follower\", \"following\"],\n\t\t\t\tname=\"unique_follow_relationship\",\n\t\t\t),\n\t\t\tmodels.CheckConstraint(\n\t\t\t\tcondition=~Q(follower=F(\"following\")),\n\t\t\t\tname=\"prevent_self_follow\",\n\t\t\t),\n\t\t]",
+        "detail": "backend.profiles.models",
+        "documentation": {}
+    },
+    {
+        "label": "create_profile_for_new_user",
+        "kind": 2,
+        "importPath": "backend.profiles.signals",
+        "description": "backend.profiles.signals",
+        "peekOfCode": "def create_profile_for_new_user(sender, instance, created, **kwargs):\n    if created:\n        Profile.objects.get_or_create(user=instance)",
+        "detail": "backend.profiles.signals",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 5,
+        "importPath": "backend.profiles.signals",
+        "description": "backend.profiles.signals",
+        "peekOfCode": "User = get_user_model()\n@receiver(post_save, sender=User)\ndef create_profile_for_new_user(sender, instance, created, **kwargs):\n    if created:\n        Profile.objects.get_or_create(user=instance)",
+        "detail": "backend.profiles.signals",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "backend.profiles.urls",
+        "description": "backend.profiles.urls",
+        "peekOfCode": "urlpatterns = [\n    path(\"authors/<str:username>/\", views.author_page, name=\"author_page\"),\n    path(\"authors/<str:username>/follow/\", views.follow_toggle, name=\"follow_toggle\"),\n    path(\"profile/edit/\", views.profile_edit, name=\"profile_edit\"),\n]",
+        "detail": "backend.profiles.urls",
+        "documentation": {}
+    },
+    {
+        "label": "can_edit_profile",
+        "kind": 2,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "def can_edit_profile(user, target_user):\n\treturn user.is_authenticated and user.id == target_user.id\ndef can_follow_user(user, target_user):\n\treturn user.is_authenticated and user.id != target_user.id\ndef author_page(request, username):\n\tauthor = get_object_or_404(User, username=username)\n\tprofile, _ = Profile.objects.get_or_create(user=author)\n\tposts = (\n\t\tPost.objects.filter(author=author, is_published=True)\n\t\t.with_comment_count()",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "can_follow_user",
+        "kind": 2,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "def can_follow_user(user, target_user):\n\treturn user.is_authenticated and user.id != target_user.id\ndef author_page(request, username):\n\tauthor = get_object_or_404(User, username=username)\n\tprofile, _ = Profile.objects.get_or_create(user=author)\n\tposts = (\n\t\tPost.objects.filter(author=author, is_published=True)\n\t\t.with_comment_count()\n\t\t.order_by(\"-created_at\")\n\t)",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "author_page",
+        "kind": 2,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "def author_page(request, username):\n\tauthor = get_object_or_404(User, username=username)\n\tprofile, _ = Profile.objects.get_or_create(user=author)\n\tposts = (\n\t\tPost.objects.filter(author=author, is_published=True)\n\t\t.with_comment_count()\n\t\t.order_by(\"-created_at\")\n\t)\n\tis_following = False\n\tif request.user.is_authenticated and request.user.id != author.id:",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "profile_edit",
+        "kind": 2,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "def profile_edit(request):\n\tprofile, _ = Profile.objects.get_or_create(user=request.user)\n\tif request.method == \"POST\":\n\t\tform = ProfileForm(request.POST, request.FILES, instance=profile)\n\t\tif form.is_valid():\n\t\t\tform.save()\n\t\t\treturn redirect(\"author_page\", username=request.user.username)\n\telse:\n\t\tform = ProfileForm(instance=profile)\n\treturn render(request, \"profiles/edit_profile.html\", {\"form\": form, \"profile\": profile})",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "follow_toggle",
+        "kind": 2,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "def follow_toggle(request, username):\n\tif request.method != \"POST\":\n\t\treturn redirect(\"author_page\", username=username)\n\ttarget_user = get_object_or_404(User, username=username)\n\tif not can_follow_user(request.user, target_user):\n\t\treturn HttpResponse(\"Permission denied\", status=403)\n\tfollow, created = Follow.objects.get_or_create(\n\t\tfollower=request.user,\n\t\tfollowing=target_user,\n\t)",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 5,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "User = get_user_model()\ndef can_edit_profile(user, target_user):\n\treturn user.is_authenticated and user.id == target_user.id\ndef can_follow_user(user, target_user):\n\treturn user.is_authenticated and user.id != target_user.id\ndef author_page(request, username):\n\tauthor = get_object_or_404(User, username=username)\n\tprofile, _ = Profile.objects.get_or_create(user=author)\n\tposts = (\n\t\tPost.objects.filter(author=author, is_published=True)",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "\tauthor",
+        "kind": 5,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "\tauthor = get_object_or_404(User, username=username)\n\tprofile, _ = Profile.objects.get_or_create(user=author)\n\tposts = (\n\t\tPost.objects.filter(author=author, is_published=True)\n\t\t.with_comment_count()\n\t\t.order_by(\"-created_at\")\n\t)\n\tis_following = False\n\tif request.user.is_authenticated and request.user.id != author.id:\n\t\tis_following = Follow.objects.filter(",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "\tposts",
+        "kind": 5,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "\tposts = (\n\t\tPost.objects.filter(author=author, is_published=True)\n\t\t.with_comment_count()\n\t\t.order_by(\"-created_at\")\n\t)\n\tis_following = False\n\tif request.user.is_authenticated and request.user.id != author.id:\n\t\tis_following = Follow.objects.filter(\n\t\t\tfollower=request.user,\n\t\t\tfollowing=author,",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "\tis_following",
+        "kind": 5,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "\tis_following = False\n\tif request.user.is_authenticated and request.user.id != author.id:\n\t\tis_following = Follow.objects.filter(\n\t\t\tfollower=request.user,\n\t\t\tfollowing=author,\n\t\t).exists()\n\tcontext = {\n\t\t\"author\": author,\n\t\t\"profile\": profile,\n\t\t\"posts\": posts,",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tis_following",
+        "kind": 5,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "\t\tis_following = Follow.objects.filter(\n\t\t\tfollower=request.user,\n\t\t\tfollowing=author,\n\t\t).exists()\n\tcontext = {\n\t\t\"author\": author,\n\t\t\"profile\": profile,\n\t\t\"posts\": posts,\n\t\t\"is_following\": is_following,\n\t\t\"follower_count\": author.followers.count(),",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "\tcontext",
+        "kind": 5,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "\tcontext = {\n\t\t\"author\": author,\n\t\t\"profile\": profile,\n\t\t\"posts\": posts,\n\t\t\"is_following\": is_following,\n\t\t\"follower_count\": author.followers.count(),\n\t\t\"following_count\": author.following.count(),\n\t}\n\treturn render(request, \"profiles/author_page.html\", context)\n@login_required",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tform",
+        "kind": 5,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "\t\tform = ProfileForm(request.POST, request.FILES, instance=profile)\n\t\tif form.is_valid():\n\t\t\tform.save()\n\t\t\treturn redirect(\"author_page\", username=request.user.username)\n\telse:\n\t\tform = ProfileForm(instance=profile)\n\treturn render(request, \"profiles/edit_profile.html\", {\"form\": form, \"profile\": profile})\n@login_required\ndef follow_toggle(request, username):\n\tif request.method != \"POST\":",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tform",
+        "kind": 5,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "\t\tform = ProfileForm(instance=profile)\n\treturn render(request, \"profiles/edit_profile.html\", {\"form\": form, \"profile\": profile})\n@login_required\ndef follow_toggle(request, username):\n\tif request.method != \"POST\":\n\t\treturn redirect(\"author_page\", username=username)\n\ttarget_user = get_object_or_404(User, username=username)\n\tif not can_follow_user(request.user, target_user):\n\t\treturn HttpResponse(\"Permission denied\", status=403)\n\tfollow, created = Follow.objects.get_or_create(",
+        "detail": "backend.profiles.views",
+        "documentation": {}
+    },
+    {
+        "label": "\ttarget_user",
+        "kind": 5,
+        "importPath": "backend.profiles.views",
+        "description": "backend.profiles.views",
+        "peekOfCode": "\ttarget_user = get_object_or_404(User, username=username)\n\tif not can_follow_user(request.user, target_user):\n\t\treturn HttpResponse(\"Permission denied\", status=403)\n\tfollow, created = Follow.objects.get_or_create(\n\t\tfollower=request.user,\n\t\tfollowing=target_user,\n\t)\n\tif not created:\n\t\tfollow.delete()\n\treturn redirect(\"author_page\", username=target_user.username)",
+        "detail": "backend.profiles.views",
         "documentation": {}
     },
     {

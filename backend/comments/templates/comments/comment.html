@@ -1,6 +1,6 @@
 <article class="comment" id="comment-{{ comment.id }}">
     <div class="meta">
-        <span>{{ comment.author.username }}</span>
+        <span><a href="{% url 'author_page' comment.author.username %}">{{ comment.author.username }}</a></span>
         <span>{{ comment.created_at|date:"M j, Y, g:i a" }}</span>
         {% if comment.updated_at != comment.created_at %}<span>edited</span>{% endif %}
     </div>
